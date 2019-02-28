@@ -1,5 +1,7 @@
 package com.hp.ssm.utils;
 
+import com.hp.ssm.exception.DateTransException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -61,7 +63,7 @@ public class GetMouthByDate {
                 res = "Dec";
                 break;
             default:
-                throw new Exception("月份出错");
+                throw new DateTransException("月份出错");
         }
         return res;
     }
