@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>首页</title>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/definebyme/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/lightbox.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/main.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/responsive.css}">
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/definebyme/js/html5shiv.js}"></script>
+    <script th:src="@{/definebyme/js/respond.min.js}"></script>
+    <![endif]-->
+    <link rel="shortcut icon" th:href="@{/definebyme/images/ico/favicon.ico}">
+    <a style="display:scroll;position:fixed;bottom:0px;right:0px;" href="#" title="Back to Top"><img
+            src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/18-12-24/79736775.jpg" alt="Back to Top"
+            border="0" margin-right="0"/></a>
+</head><!--/head-->
+
+<body>
+<div th:replace="component/header::header"></div>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">众包</h1>
+                        <p>生活因需求而美好</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+
+<section id="shortcodes">
+    <div class="container">
+
+        <div id="tab-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="page-header">选择</h2>
+                </div>
+                <div class="col-md-6">
+                    <ul id="tab1" class="nav nav-tabs">
+                        <li class="active"><a href="#tab1-item1" data-toggle="tab">添加两步验证</a></li>
+                        <li><a href="#tab1-item2" data-toggle="tab">移除两步验证</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="tab1-item1">
+                            <img th:src="@{/qrCode/{content}(content=${session.user.email})}">
+                            <form th:action="@{/user/addTwoSteps}" method="post">
+                                <div class="form-group">
+                                    <input type="text" name="email" style="display: none"
+                                           th:value="${session.user.email}">
+                                    <input type="tel" name="code" class="form-control" required="required"
+                                           placeholder="两步验证码">
+                                </div>
+                                <button type="submit" id="addTwoSteps" class="btn btn-lg btn-default"><i
+                                        class="fa fa-cog"></i> 添加两步验证
+                                </button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="tab1-item2">
+                            <form th:action="@{/user/delTwoSteps}" method="post">
+                                <input type="text" th:value="${session.email}" name="email" style="display: none">
+                                <input type="tel" name="code" class="form-control" required="required"
+                                       placeholder="两步验证码">
+                                <button type="submit" id="delTwoSteps" class="btn btn-lg btn-default"><i class="fa fa-cog"></i> 移除两步验证
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <!--/*@thymesVar id="errorMsg" type="java.lang.String"*/-->
+                    <div class="col-sm-12 text-center bottom-separator" th:text="${errorMsg}"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<div th:replace="component/footer::footer"></div>
+<script type="text/javascript" th:src="@{/definebyme/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/lightbox.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/wow.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/main.js}"></script>
+</body>
+</html>

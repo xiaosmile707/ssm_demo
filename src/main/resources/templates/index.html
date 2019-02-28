@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>首页</title>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/definebyme/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/lightbox.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/main.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/responsive.css}">
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/definebyme/js/html5shiv.js}"></script>
+    <script th:src="@{/definebyme/js/respond.min.js}"></script>
+    <![endif]-->
+    <link rel="shortcut icon" th:href="@{/definebyme/images/ico/favicon.ico}">
+    <a style="display:scroll;position:fixed;bottom:0px;right:0px;" href="#" title="Back to Top"><img
+            src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/18-12-24/79736775.jpg" alt="Back to Top"
+            border="0" margin-right="0"/></a>
+</head><!--/head-->
+
+<body>
+<div th:replace="component/header::header"></div>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">众包</h1>
+                        <p>生活因需求而美好</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+
+<section id="blog" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-5">
+                <div class="sidebar blog-sidebar">
+                    <div class="sidebar-item  recent">
+                        <h3>评论</h3>
+                        <div th:each="comment:${comments}">
+                            <div class="media">
+                                <div class="pull-left">
+                                    <a><img
+                                            src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
+                                            width="50" height="50" alt=""></a>
+                                </div>
+                                <div class="media-body">
+                                    <h4><a href="#" th:text="${comment.content}"></a></h4>
+                                    <p th:text="${#dates.format(comment.commentTime,'yyyy-MM-dd')}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-item categories">
+                        <h3>分类</h3>
+                        <ul class="nav navbar-stacked">
+                            <li><a href="#">运动<span class="pull-right">(1)</span></a></li>
+                            <li><a href="#">电商<span class="pull-right">(8)</span></a></li>
+                            <li><a href="#">文学<span class="pull-right">(4)</span></a></li>
+                            <li><a href="#">食品<span class="pull-right">(9)</span></a></li>
+                            <li><a href="#">品牌<span class="pull-right">(3)</span></a></li>
+                            <li><a href="#">金融<span class="pull-right">(4)</span></a></li>
+                            <li><a href="#">办公<span class="pull-right">(2)</span></a></li>
+                            <li><a href="#">教育<span class="pull-right">(8)</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-item tag-cloud">
+                        <h3>标签</h3>
+                        <ul class="nav nav-pills">
+                            <li><a href="#">Corporate</a></li>
+                            <li><a href="#">Joomla</a></li>
+                            <li><a href="#">Abstract</a></li>
+                            <li><a href="#">Creative</a></li>
+                            <li><a href="#">Business</a></li>
+                            <li><a href="#">Product</a></li>
+                        </ul>
+                    </div>
+                    <div class="sidebar-item popular">
+                        <h3>成功案例</h3>
+                        <ul class="gallery">
+                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular1.jpg}" alt=""
+                                                 src=""></a>
+                            </li>
+                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular2.jpg}" alt=""
+                                                 src=""></a>
+                            </li>
+                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular3.jpg}" alt=""
+                                                 src=""></a>
+                            </li>
+                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular4.jpg}" alt=""
+                                                 src=""></a>
+                            </li>
+                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular5.jpg}" alt=""
+                                                 src=""></a>
+                            </li>
+                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular1.jpg}" alt=""
+                                                 src=""></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-7">
+                <div class="row" th:each="mission:${missions}">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="single-blog two-column">
+                            <div class="post-thumb">
+                                <a th:href="@{/user/missionDetail/{missionId}(missionId=${mission.id})}"><img
+                                        src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/60122698.jpg"
+                                        class="img-responsive"
+                                        width="850" height="400" alt=""></a>
+                                <div class="post-overlay">
+                                    <span class="uppercase"><a href="#" th:inline="text">[[${#dates.format(mission.startTime,'dd')}]] <br><small
+                                            th:text="${mission.startMouth}"></small></a></span>
+                                </div>
+                            </div>
+                            <div class="post-content clearfix">
+                                <h2 class="post-title bold" th:text="${mission.name}"></h2>
+                                <h3 class="post-author"><a
+                                        th:href="@{/user/userDetail/{userId}(userId=${mission.submitId})}"
+                                        th:text="'发布者：'+${mission.submitUserName}"></a></h3>
+                                <p th:text="${mission.description}"></p>
+                                <a th:href="@{/user/missionDetail/{missionId}(missionId=${mission.id})}"
+                                   class="read-more">查看更多</a>
+                                <div class="post-bottom clearfix">
+                                    <ul class="nav navbar-nav post-nav">
+                                        <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
+                                        <li><a href="#" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
+                                            赞']]</a></li>
+                                        <li><a data-toggle="collapse" th:href="'#collapse'+${missionStat.index}"
+                                               th:inline="text"><i class="fa fa-comments"></i>[[${mission.commentCount}+'
+                                            评论']]</a></li>
+                                    </ul>
+                                </div>
+                                <div th:id="'collapse'+${missionStat.index}" class="panel-collapse collapse">
+                                    <div class="panel-body" th:each="comment:${mission.comments}">
+                                        <div class="pull-left">
+                                            <a th:href="@{/user/userDetail/{userId}(userId=${comment.submitId})}"><img
+                                                    width="50" height="50"
+                                                    src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
+                                                    alt=""></a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h4><a href="#" th:text="${comment.content}"></a></h4>
+                                            <p th:text="${#dates.format(comment.commentTime,'yyyy-MM-dd hh:mm')}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-pagination">
+                    <ul class="pagination">
+                        <li><a id="left">left</a></li>
+                        <li id="firstPage"><a th:href="@{'/user/index?pageNo=1'}">首页</a></li>
+                        <li><a th:href="@{'/user/index?pageNo='+${totalPages}}">尾页</a></li>
+                        <li><a id="right">right</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="component/footer::footer"></div>
+<div type="hidden" th:text="${pageNo}" id="pageNo"></div>
+<div type="hidden" th:text="${totalPages}" id="totalPages"></div>
+<div type="hidden" th:text="${totalCount}" id="totalCount"></div>
+<script type="text/javascript" th:src="@{/definebyme/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/lightbox.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/wow.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/pageInfoSearch.js}"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hp.ssm.dao.ValidateDao">
+    <insert id="addValidateTable" parameterType="com.hp.ssm.model.ValidateTable">
+        insert into validate (userid, validatecode, starttime, endtime)
+        VALUES (#{userId}, #{validateCode}, #{startTime}, #{endTime})
+    </insert>
+    <select id="getTableByValidateCode" resultType="com.hp.ssm.model.ValidateTable">
+        select id, userid, starttime, endtime
+        from validate
+        where validatecode = #{validateCode}
+    </select>
+    <delete id="delValidationById">
+        delete from validate where id=#{id}
+    </delete>
+</mapper>

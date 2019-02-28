@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>首页</title>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/definebyme/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/lightbox.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/main.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/responsive.css}">
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/definebyme/js/html5shiv.js}"></script>
+    <script th:src="@{/definebyme/js/respond.min.js}"></script>
+    <![endif]-->
+    <link rel="shortcut icon" th:href="@{/definebyme/images/ico/favicon.ico}">
+    <a style="display:scroll;position:fixed;bottom:0px;right:0px;" href="#" title="Back to Top"><img
+            src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/18-12-24/79736775.jpg" alt="Back to Top"
+            border="0" margin-right="0"/></a>
+</head><!--/head-->
+
+<body>
+<div th:replace="component/header::header"></div>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">众包</h1>
+                        <p>生活因需求而美好</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+
+<section id="blog-details" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-7">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="single-blog blog-details two-column">
+                            <div class="post-thumb">
+                                <h1 th:text="'发布时间 : '+${#dates.format(mission.startTime,'yyyy-MM-dd')}"></h1>
+                            </div>
+                            <div class="post-thumb">
+                                <img src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/60122698.jpg"
+                                     width="850" height="400" class="img-responsive" alt="">
+                            </div>
+                            <div class="post-content overflow">
+                                <h2 class="post-title bold" th:text="${mission.name}"></h2><br>
+                                <p th:text="${mission.content}"></p>
+                                <div class="post-bottom overflow">
+                                    <ul class="nav navbar-nav post-nav">
+                                        <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
+                                        <li><a href="#" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
+                                            赞']]</a></li>
+                                    </ul>
+                                </div>
+                                <form th:action="@{/user/validateMission}" method="post">
+                                    <input type="number" style="display: none" th:value="${mission.id}" name="missionId">
+                                    <input type="text" style="display: none" th:value="${mission.status}" name="status">
+                                    <button type="submit" th:if="${mission.status}=='正在进行'" class="btn btn-lg btn-default">验收</button>
+                                </form>
+                                <div class="author-profile padding">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <img src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
+                                                 alt="">
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <h3 th:text="'提交者 : '+${missionUserName}"></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="response-area">
+                                    <h2 class="bold">Comments</h2>
+                                    <ul class="media-list" th:each="comment:${comments}">
+                                        <li class="media">
+                                            <div class="post-comment">
+                                                <a class="pull-left" th:href="@{/user/userDetail/{userId}(userId=${comment.submitId})}">
+                                                    <img class="media-object" width="50" height="50"
+                                                         src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
+                                                         alt="">
+                                                </a>
+                                                <div class="media-body">
+                                                    <span><i class="fa fa-user"></i><a href="#"
+                                                                                       th:text="${comment.id}"></a></span>
+                                                    <p th:text="${comment.content}"></p>
+                                                    <ul class="nav navbar-nav post-nav">
+                                                        <li><a href="#" th:inline="text"><i class="fa fa-clock-o"></i>[[${#dates.format(comment.commentTime,'yyyy-MM-dd
+                                                            hh:mm')}]]</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <h2 class="bold">Reply</h2>
+                                    <div class="post-comment">
+                                        <form action="/user/addComment" method="post">
+                                            <input style="display: none" type="number" name="submitId" th:value="${session.user.id}">
+                                            <input style="display: none" type="number" name="missionId" th:value="${mission.id}">
+                                            <div class="media-body">
+                                            <textarea name="content" id="comment" required="required"
+                                                      class="form-control" rows="8" placeholder="评论"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-lg btn-success">回复</button>
+                                        </form>
+
+                                    </div>
+                                </div><!--/Response-area-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<div th:replace="component/footer::footer"></div>
+<script type="text/javascript" th:src="@{/definebyme/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/lightbox.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/wow.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/main.js}"></script>
+<script>
+    var state = {title:'',url:window.location.href.split("?")[0]};
+    history.pushState(state,'','/user/submitMissionDetail');
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>首页</title>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/definebyme/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/lightbox.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/main.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/responsive.css}">
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/definebyme/js/html5shiv.js}"></script>
+    <script th:src="@{/definebyme/js/respond.min.js}"></script>
+    <![endif]-->
+    <link rel="shortcut icon" th:href="@{/definebyme/images/ico/favicon.ico}">
+    <a style="display:scroll;position:fixed;bottom:0px;right:0px;" href="#" title="Back to Top"><img
+            src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/18-12-24/79736775.jpg" alt="Back to Top"
+            border="0" margin-right="0"/></a>
+</head><!--/head-->
+
+<body>
+<div th:replace="component/header::header"></div>
+<section id="page-breadcrumb">
+    <div class="vertical-center sun">
+        <div class="container">
+            <div class="row">
+                <div class="action">
+                    <div class="col-sm-12">
+                        <h1 class="title">众包</h1>
+                        <p>生活因需求而美好</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#action-->
+
+<section id="portfolio-information" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/90813938.jpg"
+                     class="img-responsive" alt="">
+            </div>
+            <div class="col-sm-6">
+                <div class="project-name overflow">
+                    <h2 class="bold">个人资料 </h2>
+                </div>
+                <div class="project-info overflow">
+                    <form th:action="@{/user/updateUser}" method="post">
+                    <ul class="elements">
+                        <li th:inline="text">姓名&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i>[[${user.name}]]</li>
+                        <li th:inline="text">邮箱&nbsp&nbsp;&nbsp;<i class="fa fa-angle-right"></i>[[${user.email}]]</li>
+                        <li th:inline="text" th:if="${user.sex}">性别&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i>男
+                        </li>
+                        <li th:inline="text" th:if="!${user.sex}">性别&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i>女
+                        </li>
+                        <li th:if="${user.id}==${session.user.id}">地址&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i><label>
+                            <input type="text" th:attr="placeholder=${user.address}" th:value="${user.address}" name="address">
+                        </label></li>
+                        <li th:if="${user.id}==${session.user.id}">手机号&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-angle-right"></i><label>
+                            <input type="text" th:attr="placeholder=${user.phone}"  th:value="${user.phone}" name="phone">
+                        </label></li>
+                        <li th:if="${user.id}==${session.user.id}" th:inline="text">账户余额&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-angle-right">&nbsp;[[${user.money}]]</i></li>
+                        <li th:if="${user.id}==${session.user.id}">身份证号&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-angle-right"></i><label>
+                            <input type="text" name="idNumber" th:attr="placeholder=${user.idNumber}" th:value="${user.idNumber}">
+                        </label></li>
+                    </ul>
+                        <input style="display: none" th:value="${session.user.id}" name="id">
+                        <button th:if="${user.id}==${session.user.id}" type="submit" class="btn btn-lg btn-default">更新信息</button>
+                    </form>
+                </div>
+                <div class="skills overflow">
+                    <h3>Skills:</h3>
+                    <ul class="nav navbar-nav navbar-default">
+                        <li><a><i class="fa fa-check-square"></i>Java</a></li>
+                        <li><a><i class="fa fa-check-square"></i>HTML/CSS</a></li>
+                        <li><a><i class="fa fa-check-square"></i>Javascript</a></li>
+                        <li><a><i class="fa fa-check-square"></i>Spring框架</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/#portfolio-information-->
+
+<section id="related-work" class="padding-top padding-bottom">
+    <div class="container">
+        <div class="row">
+            <h1 class="title text-center">相关项目</h1>
+            <div th:each="mission:${missions}">
+                <div class="col-sm-3">
+                    <div class="portfolio-wrapper">
+                        <div class="portfolio-single">
+                            <div class="portfolio-thumb">
+                                <img width="261" height="269"
+                                     src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/61578282.jpg"
+                                     class="img-responsive" alt="">
+                            </div>
+                            <div class="portfolio-view">
+                                <ul class="nav nav-pills">
+                                    <li>
+                                        <a href="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/61578282.jpg"
+                                           data-lightbox="example-set"><i
+                                                class="fa fa-eye"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="portfolio-info ">
+                            <h2 th:text="${mission.name}"></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<div th:replace="component/footer::footer"></div>
+<script type="text/javascript" th:src="@{/definebyme/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/lightbox.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/wow.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/main.js}"></script>
+<script>
+    var state = {title: '', url: window.location.href.split("?")[0]};
+    history.pushState(state, '', '/user/userDetail');
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hp.ssm.dao.MissionDao">
+    <select id="getAllMission" resultType="com.hp.ssm.model.Mission">
+        select mission.id,
+        submitid,
+        (select name from user where user.id=submitid) as submitUserName,
+        content,
+        description,
+        reward,
+        starttime,
+        endtime,
+        status,
+        rate,
+        mission.name
+        from mission,user where user.id=submitid
+        <if test="pageSize gt 0 and startIndex gt -1">
+            limit #{startIndex},#{pageSize}
+        </if>
+    </select>
+    <select id="getMissionById" resultType="com.hp.ssm.model.Mission">
+        select mission.id,
+               submitid,
+               (select name from user where user.id = submitid) as submitUserName,
+               content,
+               description,
+               reward,
+               starttime,
+               endtime,
+               status,
+               rate,
+               mission.name
+        from mission,
+             user
+        where mission.id = #{id}
+          and user.id = submitid
+    </select>
+    <select id="getMissionCount" resultType="int">
+        select count(id)
+        from mission
+    </select>
+    <select id="getMissionIdsByUserId" resultType="java.lang.Integer">
+        select missionid
+        from user_mission_ass
+        where receiverid = #{id}
+    </select>
+    <select id="getMissionsByUserIdAndStatus" resultType="com.hp.ssm.model.Mission">
+        select id, name, description, reward, starttime, endtime
+        from mission
+        where id in (select missionid from user_mission_ass where receiverid = #{userId})
+          and status = #{status}
+    </select>
+    <insert id="addMission" parameterType="com.hp.ssm.model.Mission">
+        insert into mission (submitid, content, description, reward, starttime, endtime, status, name)
+        VALUES (#{submitId}, #{content}, #{description}, #{reward}, #{startTime}, #{endTime}, #{status}, #{name})
+    </insert>
+    <select id="getMissionsBySubmitId" resultType="com.hp.ssm.model.Mission">
+        select id, name, description, reward, starttime, endtime,status
+        from mission
+        where submitid = #{submitId}
+    </select>
+    <update id="validateMission" parameterType="com.hp.ssm.model.Mission">
+        update mission set status=#{status} where id=#{missionId}
+    </update>
+</mapper>
