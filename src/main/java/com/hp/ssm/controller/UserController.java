@@ -6,9 +6,6 @@ import com.hp.ssm.model.Mission;
 import com.hp.ssm.model.PageCollection;
 import com.hp.ssm.model.User;
 import com.hp.ssm.model.ValidateTable;
-import com.hp.ssm.quartz.QuartzJob;
-import com.hp.ssm.quartz.QuartzManage;
-import com.hp.ssm.quartz.TaskTest;
 import com.hp.ssm.service.CommentService;
 import com.hp.ssm.service.MissionService;
 import com.hp.ssm.service.UserService;
@@ -16,7 +13,6 @@ import com.hp.ssm.service.ValidateService;
 import com.hp.ssm.utils.GoogleAuthenticator;
 import com.hp.ssm.utils.JavaMD5;
 import com.hp.ssm.utils.JavaMail;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -50,8 +46,6 @@ public class UserController {
     private MissionService missionService;
     @Autowired
     private CommentService commentService;
-    @Autowired
-    private QuartzManage manage;
 
     @GetMapping("/login")
     public String getLogin() {
@@ -79,7 +73,7 @@ public class UserController {
     }
 
     @GetMapping("/index")
-    public String getIndex(Model model, Integer pageNo) throws ClassNotFoundException, InstantiationException, SchedulerException, IllegalAccessException {
+    public String getIndex(Model model, Integer pageNo) {
         int pagesNo = (pageNo == null) ? 1 : pageNo;
         int pageSize = 4;
         List<Comment> comments = commentService.getShowComments();
@@ -93,12 +87,6 @@ public class UserController {
         model.addAttribute("totalCount", coll.getTotalCount());
         model.addAttribute("totalPages", coll.getTotalPages());
         model.addAttribute("comments", comments);
-        QuartzJob quartzJob = new QuartzJob();
-        quartzJob.setCronExpression("0 0/1 * * * ?");
-        quartzJob.setJobName("zuoye");
-        quartzJob.setTriggerName("dingshiqi");
-        quartzJob.setBeanName(TaskTest.class.getName());
-        manage.addJob(quartzJob);
         return "index";
     }
 

@@ -43,6 +43,7 @@ public class UserInterceptor implements HandlerInterceptor {
             case "/user/validate":
             case "/user/home":
             case "/user/index":
+            case "/home":
                 return true;
             default:
                 return false;
