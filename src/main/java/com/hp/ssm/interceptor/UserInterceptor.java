@@ -33,7 +33,7 @@ public class UserInterceptor implements HandlerInterceptor {
     }
 
     private boolean checkURL(String url) {
-        if (url.startsWith("/img")) {
+        if (url.startsWith("/img")||url.startsWith("/user")||url.startsWith("/admin")||url.startsWith("/error")) {
             return true;
         }
         switch (url) {
@@ -44,6 +44,7 @@ public class UserInterceptor implements HandlerInterceptor {
             case "/user/home":
             case "/user/index":
             case "/home":
+            case "/usr/*":
                 return true;
             default:
                 return false;

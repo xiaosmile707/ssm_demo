@@ -95,11 +95,6 @@ public class UserController {
         return "validation";
     }
 
-    @GetMapping("/home")
-    public String getHomepage() {
-        return "homePage";
-    }
-
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
