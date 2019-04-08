@@ -16,4 +16,7 @@ public interface UserService {
     void updateUser(User user);
     boolean checkTwoStepsActiveByEmail(String email);
     void userRealNameAuth(int userId,String idNumber);
+    void addUserPic(int userId,String userPic);
+
+    String getUserPic(Integer userId);
 }

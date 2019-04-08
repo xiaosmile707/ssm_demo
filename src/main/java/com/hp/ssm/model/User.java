@@ -18,4 +18,5 @@ public class User {
     private String twoStepsSecret;
     private Boolean isActive;
     private Boolean rnauth;
+    private String pic;
 }

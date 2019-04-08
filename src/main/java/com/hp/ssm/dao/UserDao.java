@@ -31,4 +31,9 @@ public interface UserDao {
     Boolean checkTwoStepsActiveByEmail(String email);
 
     void userRealNameAuth(int userId, String idNumber);
+
+
+    void addUserPic(@Param("userId") int userId, @Param("userPic") String userPic);
+
+    String getUserPic(@Param("userId")Integer userId);
 }

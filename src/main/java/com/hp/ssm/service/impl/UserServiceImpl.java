@@ -78,4 +78,14 @@ public class UserServiceImpl implements UserService {
     public void userRealNameAuth(int userId, String idNumber) {
         userDao.userRealNameAuth(userId,idNumber);
     }
+
+    @Override
+    public void addUserPic(int userId, String userPic) {
+        userDao.addUserPic(userId,userPic);
+    }
+
+    @Override
+    public String getUserPic(Integer userId) {
+        return userDao.getUserPic(userId);
+    }
 }

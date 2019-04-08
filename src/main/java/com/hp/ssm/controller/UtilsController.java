@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -26,12 +30,12 @@ public class UtilsController {
 
 
     @GetMapping("/qrCode/{content}")
-    public void getImg(@PathVariable String content,HttpServletResponse res) throws IOException, WriterException {
+    public void getImg(@PathVariable String content, HttpServletResponse res) throws IOException, WriterException {
         String secret = GoogleAuthenticator.generateSecretKey();
-        if (!userService.checkTwoStepsActiveByEmail(content)){
-            userService.updateSecretByEmail(content,secret);
+        if (!userService.checkTwoStepsActiveByEmail(content)) {
+            userService.updateSecretByEmail(content, secret);
         }
-        String secretFormat="otpauth://totp/"+content+"@zbpt?secret="+secret;
+        String secretFormat = "otpauth://totp/" + content + "@zbpt?secret=" + secret;
         //设置格式
         String format = "png";
         int width = 300;
@@ -54,4 +58,29 @@ public class UtilsController {
             stream.close();
         }
     }
+
+    @GetMapping("/user/pic/{userId}")
+    public void getUserPic(@PathVariable Integer userId, HttpServletResponse res) throws IOException {
+        String userPicAddress = userService.getUserPic(userId);
+        File file;
+        file = new File("E:\\upload\\NULL.jpg");
+        if (userPicAddress != null && !"".equals(userPicAddress)){
+            file = new File(userPicAddress);
+        }
+
+
+        FileInputStream fis = new FileInputStream(file);
+
+        if (fis != null){
+            int i = fis.available(); // 得到文件大小
+            byte[] data = new byte[i];
+            fis.read(data); // 读数据
+            fis.close();
+            res.setContentType("image/png");  // 设置返回的文件类型
+            OutputStream toClient = res.getOutputStream(); // 得到向客户端输出二进制数据的对象
+            toClient.write(data); // 输出数据
+            toClient.close();
+        }
+    }
+
 }

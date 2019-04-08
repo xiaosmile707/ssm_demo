@@ -23,9 +23,15 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -391,6 +397,15 @@ public class UserController {
     @PostMapping("/realNameAuth")
     public String realNameAuth(Integer userId,String idNumber){
         userService.userRealNameAuth(userId,idNumber);
+        return "redirect:/user/userDetail/" + userId;
+    }
+
+    @PostMapping("/pic/upload")
+    public String uploadUserPic(@RequestParam("file") MultipartFile file,Integer userId) throws IOException {
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get("E:\\upload/"+file.getOriginalFilename());
+        Files.write(path,bytes);
+        userService.addUserPic(userId,path.toString());
         return "redirect:/user/userDetail/" + userId;
     }
 

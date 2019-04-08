@@ -81,9 +81,25 @@
         where email = #{email}
     </select>
     <update id="updateUser">
-        update user set address =#{address},phone=#{phone},idnumber=#{idNumber} where id=#{id}
+        update user
+        set address =#{address},
+            phone=#{phone},
+            idnumber=#{idNumber}
+        where id = #{id}
     </update>
     <update id="userRealNameAuth">
-        update user set idnumber=#{idNumber} where id=#{userId}
+        update user
+        set idnumber=#{idNumber}
+        where id = #{userId}
     </update>
+    <insert id="addUserPic">
+        update user
+        set pic = #{userPic}
+        where id = #{userId}
+    </insert>
+    <select id="getUserPic" resultType="java.lang.String">
+        select pic
+        from user
+        where id = #{userId}
+    </select>
 </mapper>

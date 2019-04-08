@@ -22,4 +22,6 @@ public class Mission {
     private String startMouth;
     private int commentCount;
     private List<Comment> comments;
+    private String pic;
+    private int type;
 }

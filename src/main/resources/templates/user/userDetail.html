@@ -46,8 +46,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <img src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/90813938.jpg"
-                     class="img-responsive" alt="">
+                <img th:src="@{'/user/pic/'+${user.id}}"
+                     class="img-responsive" alt="" height="200px" width="200px">
+                <form th:if="${user.id}==${session.user.id}" method="post" action="/user/pic/upload" enctype="multipart/form-data">
+                    <input type="file" class="fa fa-angle-right" name="file">
+                    <input style="display: none" th:value="${user.id}" name="userId">
+                    <button  type="submit" class="btn btn-lg btn-default">上传头像</button>
+                </form>
             </div>
             <div class="col-sm-6">
                 <div class="project-name overflow">
