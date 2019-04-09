@@ -137,7 +137,7 @@
                                 <div class="post-bottom clearfix">
                                     <ul class="nav navbar-nav post-nav">
                                         <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                        <li><a href="#" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
+                                        <li><a th:href="@{/user/mission/rate/{missionId}(missionId=${mission.id})}" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
                                             赞']]</a></li>
                                         <li><a data-toggle="collapse" th:href="'#collapse'+${missionStat.index}"
                                                th:inline="text"><i class="fa fa-comments"></i>[[${mission.commentCount}+'

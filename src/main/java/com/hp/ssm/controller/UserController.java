@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @GetMapping("/realNameAuth")
-    public String getRealNameAuth(){
+    public String getRealNameAuth() {
         return "user/realNameAuth";
     }
 
@@ -349,64 +349,72 @@ public class UserController {
         String status;
         switch (missionType) {
             case 1:
-                status="未开始";
+                status = "未开始";
                 break;
             case 2:
-                status="正在进行";
+                status = "正在进行";
                 break;
             case 3:
-                status="已完成";
+                status = "已完成";
                 break;
             default:
                 return null;
         }
-        List<Mission> missions=missionService.getMissionsByUserIdAndStatus(userId,status);
-        model.addAttribute("status",status);
-        model.addAttribute("missions",missions);
+        List<Mission> missions = missionService.getMissionsByUserIdAndStatus(userId, status);
+        model.addAttribute("status", status);
+        model.addAttribute("missions", missions);
         return "user/missionList";
     }
+
     @GetMapping("/addMission")
-    public String getAddMission(){
+    public String getAddMission() {
         return "user/addMission";
     }
+
     @PostMapping("/addMission")
-    public String addMission(Mission mission){
+    public String addMission(Mission mission) {
         missionService.addMission(mission);
         return "user/addMission";
     }
 
     @GetMapping("/submitMissionList/{userId}")
-    public String getSubmitMissionList(@PathVariable Integer userId,Model model){
-        List<Mission> missions=missionService.getMissionsBySubmitId(userId);
-        model.addAttribute("missions",missions);
+    public String getSubmitMissionList(@PathVariable Integer userId, Model model) {
+        List<Mission> missions = missionService.getMissionsBySubmitId(userId);
+        model.addAttribute("missions", missions);
         return "user/submitMissionList";
     }
 
     @PostMapping("/validateMission")
-    public String validateMission(Integer missionId,String status){
-        if ("未开始".equals(status)){
-            missionService.validateMission(missionId,"正在进行");
-            return "redirect:/user/receiveMissionDetail/"+missionId;
-        }else {
+    public String validateMission(Integer missionId, String status) {
+        if ("未开始".equals(status)) {
+            missionService.validateMission(missionId, "正在进行");
+            return "redirect:/user/receiveMissionDetail/" + missionId;
+        } else {
 
-            missionService.validateMission(missionId,"已完成");
-            return "redirect:/user/submitMissionDetail/"+missionId;
+            missionService.validateMission(missionId, "已完成");
+            return "redirect:/user/submitMissionDetail/" + missionId;
         }
     }
 
     @PostMapping("/realNameAuth")
-    public String realNameAuth(Integer userId,String idNumber){
-        userService.userRealNameAuth(userId,idNumber);
+    public String realNameAuth(Integer userId, String idNumber) {
+        userService.userRealNameAuth(userId, idNumber);
         return "redirect:/user/userDetail/" + userId;
     }
 
     @PostMapping("/pic/upload")
-    public String uploadUserPic(@RequestParam("file") MultipartFile file,Integer userId) throws IOException {
+    public String uploadUserPic(@RequestParam("file") MultipartFile file, Integer userId) throws IOException {
         byte[] bytes = file.getBytes();
-        Path path = Paths.get("E:\\upload/"+file.getOriginalFilename());
-        Files.write(path,bytes);
-        userService.addUserPic(userId,path.toString());
+        Path path = Paths.get("E:\\upload/" + file.getOriginalFilename());
+        Files.write(path, bytes);
+        userService.addUserPic(userId, path.toString());
         return "redirect:/user/userDetail/" + userId;
+    }
+
+    @GetMapping("/mission/rate/{missionId}")
+    public String addRate(@PathVariable int missionId) {
+        userService.addMissionRate(missionId);
+        return "redirect:/user/index";
     }
 
     @InitBinder

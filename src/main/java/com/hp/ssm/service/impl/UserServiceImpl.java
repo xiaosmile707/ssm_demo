@@ -88,4 +88,9 @@ public class UserServiceImpl implements UserService {
     public String getUserPic(Integer userId) {
         return userDao.getUserPic(userId);
     }
+
+    @Override
+    public void addMissionRate(int missionId) {
+        userDao.addMissionRate(missionId);
+    }
 }

@@ -102,4 +102,9 @@
         from user
         where id = #{userId}
     </select>
+    <update id="addMissionRate">
+        update mission
+        set rate = rate + 1
+        where id = #{missionId}
+    </update>
 </mapper>
