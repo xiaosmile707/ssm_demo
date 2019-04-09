@@ -26,20 +26,6 @@
 
 <body>
 <div th:replace="component/header::header"></div>
-<section id="page-breadcrumb">
-    <div class="vertical-center sun">
-        <div class="container">
-            <div class="row">
-                <div class="action">
-                    <div class="col-sm-12">
-                        <h1 class="title">众包</h1>
-                        <p>生活因需求而美好</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <!--/#action-->
 
 <section id="portfolio-information" class="padding-top">
@@ -84,15 +70,6 @@
                         <input style="display: none" th:value="${session.user.id}" name="id">
                         <button th:if="${user.id}==${session.user.id}" type="submit" class="btn btn-lg btn-default">更新信息</button>
                     </form>
-                </div>
-                <div class="skills overflow">
-                    <h3>Skills:</h3>
-                    <ul class="nav navbar-nav navbar-default">
-                        <li><a><i class="fa fa-check-square"></i>Java</a></li>
-                        <li><a><i class="fa fa-check-square"></i>HTML/CSS</a></li>
-                        <li><a><i class="fa fa-check-square"></i>Javascript</a></li>
-                        <li><a><i class="fa fa-check-square"></i>Spring框架</a></li>
-                    </ul>
                 </div>
             </div>
         </div>

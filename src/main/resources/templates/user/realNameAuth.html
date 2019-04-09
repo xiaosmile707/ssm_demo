@@ -25,21 +25,7 @@
 </head><!--/head-->
 
 <body>
-<div th:replace="component/footer::footer"></div>
-<section id="page-breadcrumb">
-    <div class="vertical-center sun">
-        <div class="container">
-            <div class="row">
-                <div class="action">
-                    <div class="col-sm-12">
-                        <h1 class="title">众包</h1>
-                        <p>生活因需求而美好</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<div th:replace="component/header::header"></div>
 <!--/#action-->
 
 <section id="portfolio-information" class="padding-top">
@@ -52,9 +38,9 @@
                 <div class="project-info overflow">
                     <form th:action="@{/user/realNameAuth}" method="post">
                         <ul class="elements">
-                            <li th:inline="text">姓名&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i>[[${user.name}]]
+                            <li th:inline="text">姓名&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-right"></i>[[${session.user.name}]]
                             </li>
-                            <li th:inline="text">邮箱&nbsp&nbsp;&nbsp;<i class="fa fa-angle-right"></i>[[${user.email}]]
+                            <li th:inline="text">邮箱&nbsp&nbsp;&nbsp;<i class="fa fa-angle-right"></i>[[${session.user.email}]]
                             </li>
                             <li th:inline="text" th:if="${session.user.sex}">性别&nbsp;&nbsp;&nbsp;<i
                                     class="fa fa-angle-right"></i>男
@@ -64,7 +50,7 @@
                             </li>
 
                             <li th:inline="text">手机号&nbsp;&nbsp;&nbsp;<i
-                                    class="fa fa-angle-right"></i>[[${}]]
+                                    class="fa fa-angle-right"></i>[[${session.user.phone}]]
                             </li>
 
                             <li>身份证号&nbsp;&nbsp;&nbsp;<i
@@ -78,15 +64,6 @@
                             提交实名身份信息
                         </button>
                     </form>
-                </div>
-                <div class="skills overflow">
-                    <h3>Skills:</h3>
-                    <ul class="nav navbar-nav navbar-default">
-                        <li><a><i class="fa fa-check-square"></i>Java</a></li>
-                        <li><a><i class="fa fa-check-square"></i>HTML/CSS</a></li>
-                        <li><a><i class="fa fa-check-square"></i>Javascript</a></li>
-                        <li><a><i class="fa fa-check-square"></i>Spring框架</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
