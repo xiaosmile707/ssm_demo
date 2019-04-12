@@ -19,4 +19,6 @@ public class User {
     private Boolean isActive;
     private Boolean rnauth;
     private String pic;
+    private int verified;
+
 }

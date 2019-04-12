@@ -70,8 +70,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkTwoStepsActiveByEmail(String email) {
         Boolean check=userDao.checkTwoStepsActiveByEmail(email);
-        boolean res=(check == null)?false:check;
-        return res;
+        return (check == null)?false:check;
     }
 
     @Override

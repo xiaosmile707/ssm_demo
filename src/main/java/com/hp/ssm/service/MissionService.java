@@ -14,4 +14,8 @@ public interface MissionService {
     List<Mission> getMissionsBySubmitId(int submitId);
     void addMission(Mission mission);
     void validateMission(int missionId,String status);
+
+    void addMissionPic(Integer missionId, String pic);
+
+    String getMissionPic(Integer missionId);
 }

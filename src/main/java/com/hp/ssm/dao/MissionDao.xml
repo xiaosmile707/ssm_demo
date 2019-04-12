@@ -55,11 +55,23 @@
         VALUES (#{submitId}, #{content}, #{description}, #{reward}, #{startTime}, #{endTime}, #{status}, #{name})
     </insert>
     <select id="getMissionsBySubmitId" resultType="com.hp.ssm.model.Mission">
-        select id, name, description, reward, starttime, endtime,status
+        select id, name, description, reward, starttime, endtime, status
         from mission
         where submitid = #{submitId}
     </select>
     <update id="validateMission" parameterType="com.hp.ssm.model.Mission">
-        update mission set status=#{status} where id=#{missionId}
+        update mission
+        set status=#{status}
+        where id = #{missionId}
     </update>
+    <update id="addMissionPic">
+        update mission
+        set pic = #{pic}
+        where id = #{missionId}
+    </update>
+    <select id="getMissionPic" resultType="java.lang.String">
+        select pic
+        from mission
+        where id = #{missionId}
+    </select>
 </mapper>

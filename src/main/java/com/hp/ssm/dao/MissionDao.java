@@ -1,7 +1,7 @@
 package com.hp.ssm.dao;
 
 import com.hp.ssm.model.Mission;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Param;import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
@@ -14,4 +14,8 @@ public interface MissionDao {
     List<Mission> getMissionsBySubmitId(int submitId);
     void addMission(Mission mission);
     void validateMission(int missionId,String status);
+
+    void addMissionPic(@Param("missionId")Integer missionId, @Param("pic")String pic);
+
+    String getMissionPic(@Param("missionId")Integer missionId);
 }

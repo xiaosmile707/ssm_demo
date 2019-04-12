@@ -19,7 +19,7 @@
         set isactive = true
         where id = #{id}
     </update>
-    <select id="getPasswordByEmail" parameterType="com.hp.ssm.model.User" resultType="java.lang.String">
+    <select id="getPasswordByEmail" resultType="java.lang.String">
         select password
         from user
         where email = #{email}
@@ -89,7 +89,8 @@
     </update>
     <update id="userRealNameAuth">
         update user
-        set idnumber=#{idNumber}
+        set idnumber=#{idNumber},
+            verified = 1
         where id = #{userId}
     </update>
     <insert id="addUserPic">

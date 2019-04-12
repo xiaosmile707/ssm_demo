@@ -31,73 +31,27 @@
 <section id="blog" class="padding-top">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-5">
-                <div class="sidebar blog-sidebar">
-                    <div class="sidebar-item  recent">
-                        <h3>评论</h3>
-                        <div th:each="comment:${comments}">
-                            <div class="media">
-                                <div class="pull-left">
-                                    <a><img
-                                            src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
-                                            width="50" height="50" alt=""></a>
-                                </div>
-                                <div class="media-body">
-                                    <h4><a href="#" th:text="${comment.content}"></a></h4>
-                                    <p th:text="${#dates.format(comment.commentTime,'yyyy-MM-dd')}"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sidebar-item categories">
-                        <h3>分类</h3>
-                        <ul class="nav navbar-stacked">
-                            <li><a href="#">运动<span class="pull-right">(1)</span></a></li>
-                            <li><a href="#">电商<span class="pull-right">(8)</span></a></li>
-                            <li><a href="#">文学<span class="pull-right">(4)</span></a></li>
-                            <li><a href="#">食品<span class="pull-right">(9)</span></a></li>
-                            <li><a href="#">品牌<span class="pull-right">(3)</span></a></li>
-                            <li><a href="#">金融<span class="pull-right">(4)</span></a></li>
-                            <li><a href="#">办公<span class="pull-right">(2)</span></a></li>
-                            <li><a href="#">教育<span class="pull-right">(8)</span></a></li>
-                        </ul>
-                    </div>
-                    <div class="sidebar-item tag-cloud">
-                        <h3>标签</h3>
-                        <ul class="nav nav-pills">
-                            <li><a href="#">Corporate</a></li>
-                            <li><a href="#">Joomla</a></li>
-                            <li><a href="#">Abstract</a></li>
-                            <li><a href="#">Creative</a></li>
-                            <li><a href="#">Business</a></li>
-                            <li><a href="#">Product</a></li>
-                        </ul>
-                    </div>
-                    <div class="sidebar-item popular">
-                        <h3>成功案例</h3>
-                        <ul class="gallery">
-                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular1.jpg}" alt=""
-                                                 src=""></a>
-                            </li>
-                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular2.jpg}" alt=""
-                                                 src=""></a>
-                            </li>
-                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular3.jpg}" alt=""
-                                                 src=""></a>
-                            </li>
-                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular4.jpg}" alt=""
-                                                 src=""></a>
-                            </li>
-                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular5.jpg}" alt=""
-                                                 src=""></a>
-                            </li>
-                            <li><a href="#"><img th:src="@{/definebyme/images/portfolio/popular1.jpg}" alt=""
-                                                 src=""></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col-md-3 col-sm-5">-->
+<!--                <div class="sidebar blog-sidebar">-->
+<!--                    <div class="sidebar-item  recent">-->
+<!--                        <h3>评论</h3>-->
+<!--                        <div th:each="comment:${comments}">-->
+<!--                            <div class="media">-->
+<!--                                <div class="pull-left">-->
+<!--                                    <a><img-->
+<!--                                           th:src="@{'/user/pic/'+${comment.submitId}}"-->
+<!--                                            width="50" height="50" alt=""></a>-->
+<!--                                </div>-->
+<!--                                <div class="media-body">-->
+<!--                                    <h4><a href="#" th:text="${comment.content}"></a></h4>-->
+<!--                                    <p th:text="${#dates.format(comment.commentTime,'yyyy-MM-dd')}"></p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+<!--            </div>-->
             <div class="col-md-9 col-sm-7">
                 <div class="row" th:each="mission:${missions}">
                     <div class="col-md-12 col-sm-12">
@@ -122,7 +76,6 @@
                                    class="read-more">查看更多</a>
                                 <div class="post-bottom clearfix">
                                     <ul class="nav navbar-nav post-nav">
-                                        <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
                                         <li><a th:href="@{/user/mission/rate/{missionId}(missionId=${mission.id})}" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
                                             赞']]</a></li>
                                         <li><a data-toggle="collapse" th:href="'#collapse'+${missionStat.index}"
@@ -135,7 +88,7 @@
                                         <div class="pull-left">
                                             <a th:href="@{/user/userDetail/{userId}(userId=${comment.submitId})}"><img
                                                     width="50" height="50"
-                                                    src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
+                                                    th:src="@{'/user/pic/'+${comment.submitId}}"
                                                     alt=""></a>
                                         </div>
                                         <div class="media-body">

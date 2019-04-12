@@ -91,4 +91,14 @@ public class MissionServiceImpl implements MissionService {
     public void validateMission(int missionId, String status) {
         missionDao.validateMission(missionId,status);
     }
+
+    @Override
+    public void addMissionPic(Integer missionId, String pic) {
+        missionDao.addMissionPic(missionId,pic);
+    }
+
+    @Override
+    public String getMissionPic(Integer missionId) {
+        return missionDao.getMissionPic(missionId);
+    }
 }

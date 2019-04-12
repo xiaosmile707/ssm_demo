@@ -38,24 +38,29 @@
                             <div class="post-thumb">
                                 <h1 th:text="'发布时间 : '+${#dates.format(mission.startTime,'yyyy-MM-dd')}"></h1>
                             </div>
-                            <div class="post-thumb">
-                                <img src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/60122698.jpg"
+
+                            <div class="post-thumb" >
+                                <img th:src="@{'/mission/pic/'+${mission.id}}"
                                      width="850" height="400" class="img-responsive" alt="">
                             </div>
+                            <form method="post" th:action="@{/mission/upload/pic}" th:if="${session.user.id}==${mission.submitId}" enctype="multipart/form-data">
+                                <input type="file" class="fa fa-angle-right" name="file">
+                                <input style="display: none" th:value="${mission.id}" name="missionId">
+                                <button  type="submit" class="btn btn-lg btn-default">上传快递图片</button>
+                            </form>
                             <div class="post-content overflow">
                                 <h2 class="post-title bold" th:text="${mission.name}"></h2><br>
                                 <p th:text="${mission.content}"></p>
                                 <div class="post-bottom overflow">
                                     <ul class="nav navbar-nav post-nav">
-                                        <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                        <li><a href="#" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
+                                        <li><a th:href="@{/user/mission/rate/{missionId}(missionId=${mission.id})}" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
                                             赞']]</a></li>
                                     </ul>
                                 </div>
                                 <div class="author-profile padding">
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <img src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
+                                            <img th:src="@{'/user/pic/'+${mission.submitId}}" width="100" height="100"
                                                  alt="">
                                         </div>
                                         <div class="col-sm-10">
@@ -71,12 +76,12 @@
                                                 <a class="pull-left"
                                                    th:href="@{/user/userDetail/{userId}(userId=${comment.submitId})}">
                                                     <img class="media-object" width="50" height="50"
-                                                         src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
+                                                         th:src="@{'/user/pic/'+${comment.submitId}}"
                                                          alt="">
                                                 </a>
                                                 <div class="media-body">
                                                     <span><i class="fa fa-user"></i><a href="#"
-                                                                                       th:text="${comment.id}"></a></span>
+                                                                                       th:text="${comment.submitId}"></a></span>
                                                     <p th:text="${comment.content}"></p>
                                                     <ul class="nav navbar-nav post-nav">
                                                         <li><a href="#" th:inline="text"><i class="fa fa-clock-o"></i>[[${#dates.format(comment.commentTime,'yyyy-MM-dd

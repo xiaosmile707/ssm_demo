@@ -390,7 +390,6 @@ public class UserController {
             missionService.validateMission(missionId, "正在进行");
             return "redirect:/user/receiveMissionDetail/" + missionId;
         } else {
-
             missionService.validateMission(missionId, "已完成");
             return "redirect:/user/submitMissionDetail/" + missionId;
         }

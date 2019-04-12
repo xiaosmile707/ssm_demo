@@ -7,6 +7,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.hp.ssm.service.MissionService;
 import com.hp.ssm.service.UserService;
 import com.hp.ssm.utils.GoogleAuthenticator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -27,7 +26,8 @@ import java.util.HashMap;
 public class UtilsController {
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private MissionService missionService;
 
     @GetMapping("/qrCode/{content}")
     public void getImg(@PathVariable String content, HttpServletResponse res) throws IOException, WriterException {
@@ -64,14 +64,38 @@ public class UtilsController {
         String userPicAddress = userService.getUserPic(userId);
         File file;
         file = new File("E:\\upload\\NULL.jpg");
-        if (userPicAddress != null && !"".equals(userPicAddress)){
+        if (userPicAddress != null && !"".equals(userPicAddress)) {
             file = new File(userPicAddress);
         }
 
 
         FileInputStream fis = new FileInputStream(file);
 
-        if (fis != null){
+        if (fis != null) {
+            int i = fis.available(); // 得到文件大小
+            byte[] data = new byte[i];
+            fis.read(data); // 读数据
+            fis.close();
+            res.setContentType("image/png");  // 设置返回的文件类型
+            OutputStream toClient = res.getOutputStream(); // 得到向客户端输出二进制数据的对象
+            toClient.write(data); // 输出数据
+            toClient.close();
+        }
+    }
+
+    @GetMapping("/mission/pic/{missionId}")
+    public void getMissionPic(@PathVariable Integer missionId, HttpServletResponse res) throws IOException {
+        String missionPicAddress = missionService.getMissionPic(missionId);
+        File file;
+        file = new File("E:\\upload\\empty.jpg");
+        if (missionPicAddress != null && !"".equals(missionPicAddress)) {
+            file = new File(missionPicAddress);
+        }
+
+
+        FileInputStream fis = new FileInputStream(file);
+
+        if (fis != null) {
             int i = fis.available(); // 得到文件大小
             byte[] data = new byte[i];
             fis.read(data); // 读数据
