@@ -80,20 +80,20 @@
 <section id="related-work" class="padding-top padding-bottom">
     <div class="container">
         <div class="row">
-            <h1 class="title text-center">相关项目</h1>
+            <h1 class="title text-center">我的订单</h1>
             <div th:each="mission:${missions}">
                 <div class="col-sm-3">
                     <div class="portfolio-wrapper">
                         <div class="portfolio-single">
                             <div class="portfolio-thumb">
                                 <img width="261" height="269"
-                                     src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/61578282.jpg"
+                                     th:src="@{'/mission/pic/'+${mission.id}}"
                                      class="img-responsive" alt="">
                             </div>
                             <div class="portfolio-view">
                                 <ul class="nav nav-pills">
                                     <li>
-                                        <a href="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/61578282.jpg"
+                                        <a th:href="@{'/mission/pic/'+${mission.id}}"
                                            data-lightbox="example-set"><i
                                                 class="fa fa-eye"></i></a></li>
                                 </ul>

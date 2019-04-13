@@ -58,7 +58,7 @@
                         <div class="single-blog two-column">
                             <div class="post-thumb">
                                 <a th:href="@{/user/missionDetail/{missionId}(missionId=${mission.id})}"><img
-                                        src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/60122698.jpg"
+                                        th:src="@{'/mission/pic/'+${mission.id}}"
                                         class="img-responsive"
                                         width="850" height="400" alt=""></a>
                                 <div class="post-overlay">

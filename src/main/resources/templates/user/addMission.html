@@ -37,16 +37,16 @@
             <div class="col-sm-6 col-md-6">
                 <div class="single-price price-one">
                     <div class="table-heading">
-                        <p class="plan-name" th:text="发布需求"></p>
+                        <p class="plan-name" th:text="我要寄件"></p>
                     </div>
                     <form th:action="@{/user/addMission}" method="post">
                     <ul>
-                        <li>项目名:<input type="text" required="required" name="name" placeholder="项目名"></li>
-                        <li>项目描述:<textarea required="required" name="description" placeholder="项目描述"></textarea></li>
-                        <li>项目具体要求:<textarea required="required" name="content" placeholder="项目内容"></textarea></li>
-                        <li>项目奖励:<input type="number" required="required" name="reward" placeholder="奖励" id="inputMoney"></li>
-                        <li>开始时间:<input type="datetime-local" required="required" name="startTime" placeholder="开始时间"></li>
-                        <li>结束时间:<input type="datetime-local" required="required" name="endTime" placeholder="结束时间"></li>
+                        <li>快递名:<input type="text" required="required" name="name" placeholder="快递名"></li>
+                        <li>快递类型:<textarea required="required" name="description" placeholder="快递类型"></textarea></li>
+                        <li>快递具体描述:<textarea required="required" name="content" placeholder="快递具体描述"></textarea></li>
+                        <li>快递费用:<input type="number" required="required" name="reward" placeholder="快递费用" id="inputMoney"></li>
+                        <li>寄出时间:<input type="datetime-local" required="required" name="startTime" placeholder="寄出时间"></li>
+                        <li>预计收到时间:<input type="datetime-local" required="required" name="endTime" placeholder="预计收到时间"></li>
                     </ul>
                         <input type="number" style="display: none" th:value="${session.user.id}" name="submitId">
                         <button  type="submit" class="btn btn-buynow">提交</button>

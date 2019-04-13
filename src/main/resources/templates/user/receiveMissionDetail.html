@@ -39,7 +39,7 @@
                                 <h1 th:text="'发布时间 : '+${#dates.format(mission.startTime,'yyyy-MM-dd')}"></h1>
                             </div>
                             <div class="post-thumb">
-                                <img src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/60122698.jpg"
+                                <img th:src="@{'/mission/pic/'+${mission.id}}"
                                      width="850" height="400" class="img-responsive" alt="">
                             </div>
                             <div class="post-content overflow">

@@ -38,7 +38,7 @@
                             <li><a th:if="${session.user}!=null"
                                    th:href="@{/user/userDetail/{userId}(userId=${session.user.id})}">我的信息</a></li>
                             <li><a th:if="${session.user}!=null"
-                                   th:href="@{/user/submitMissionList/{userId}(userId=${session.user.id})}">我的发布</a>
+                                   th:href="@{/user/submitMissionList/{userId}(userId=${session.user.id})}">我的寄件</a>
                             </li>
                             <li><a th:if="${session.user}!=null" th:href="@{/user/twoSteps}">两步验证</a></li>
                             <li><a th:if="${session.user}!=null" th:href="@{/user/realNameAuth}">实名认证</a></li>
@@ -70,7 +70,6 @@
                     <div class="action">
                         <div class="col-sm-12">
                             <h1 class="title">快递平台</h1>
-                            <p>生活因需求而美好</p>
                         </div>
                     </div>
                 </div>
