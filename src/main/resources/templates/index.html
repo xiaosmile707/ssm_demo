@@ -13,7 +13,7 @@
     <link rel="stylesheet" th:href="@{/definebyme/css/animate.min.css}">
     <link rel="stylesheet" th:href="@{/definebyme/css/main.css}">
     <link rel="stylesheet" th:href="@{/definebyme/css/responsive.css}">
-
+    <link rel="stylesheet" th:href="@{/definebyme/css/express.css}">
     <!--[if lt IE 9]>
     <script th:src="@{/definebyme/js/html5shiv.js}"></script>
     <script th:src="@{/definebyme/js/respond.min.js}"></script>
@@ -31,28 +31,45 @@
 <section id="blog" class="padding-top">
     <div class="container">
         <div class="row">
-<!--            <div class="col-md-3 col-sm-5">-->
-<!--                <div class="sidebar blog-sidebar">-->
-<!--                    <div class="sidebar-item  recent">-->
-<!--                        <h3>评论</h3>-->
-<!--                        <div th:each="comment:${comments}">-->
-<!--                            <div class="media">-->
-<!--                                <div class="pull-left">-->
-<!--                                    <a><img-->
-<!--                                           th:src="@{'/user/pic/'+${comment.submitId}}"-->
-<!--                                            width="50" height="50" alt=""></a>-->
-<!--                                </div>-->
-<!--                                <div class="media-body">-->
-<!--                                    <h4><a href="#" th:text="${comment.content}"></a></h4>-->
-<!--                                    <p th:text="${#dates.format(comment.commentTime,'yyyy-MM-dd')}"></p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+<!--            class="col-md-9 col-sm-7"-->
+            <div  th:if="${session.user == null ||session.user.type == 0}">
+                <div class="dynamic_content_wrapper">
+                    <div class="dynamic_content">
+                        <div id="function">
+                            <div>
+                                <div class="shipping-detail-page">
+                                    <div class="shipping-search-detail"><!-- 查询表单 -->
+                                        <div class="bill-number-wrapper">
+                                            <div class="input-group">
+                                                <div class="tokenfield form-control focus"><input
+                                                        type="text" class="token-input" autocomplete="off"
+                                                        placeholder="输入运单号进行查询，或上传二维码查询"
+                                                        tabindex="0" style="min-width: 90px; width: 664px;"></div>
+                                                <label class="input-group-addon clear-inputs"><span
+                                                        class="sfi sfi-trash"></span></label><span id="queryBill"
+                                                                                                   type="button"
+                                                                                                   class="primary-button maidian"
+                                            >查询</span>
+                                            </div>
+                                        </div>
+                                    </div><!-- 中国大陆运单查询 -->
+                                    <div class="delivery-view"><!-- 我的运单列表 -->
+                                        <div class="my-bills">
+                                            <div class="bill-title">我的包裹</div>
+                                            <div class="bill-tab"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-<!--                </div>-->
-<!--            </div>-->
-            <div class="col-md-9 col-sm-7">
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-7" th:if="${session.user != null && session.user.type == 1}">
                 <div class="row" th:each="mission:${missions}">
                     <div class="col-md-12 col-sm-12">
                         <div class="single-blog two-column">
@@ -76,7 +93,8 @@
                                    class="read-more">查看更多</a>
                                 <div class="post-bottom clearfix">
                                     <ul class="nav navbar-nav post-nav">
-                                        <li><a th:href="@{/user/mission/rate/{missionId}(missionId=${mission.id})}" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
+                                        <li><a th:href="@{/user/mission/rate/{missionId}(missionId=${mission.id})}"
+                                               th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
                                             赞']]</a></li>
                                         <li><a data-toggle="collapse" th:href="'#collapse'+${missionStat.index}"
                                                th:inline="text"><i class="fa fa-comments"></i>[[${mission.commentCount}+'

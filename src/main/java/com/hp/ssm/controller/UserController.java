@@ -82,7 +82,6 @@ public class UserController {
     public String getIndex(Model model, Integer pageNo) {
         int pagesNo = (pageNo == null) ? 1 : pageNo;
         int pageSize = 4;
-        List<Comment> comments = commentService.getShowComments();
         PageCollection<Mission> coll = missionService.getAllMission(pageSize, pagesNo);
         //missions可能为空
         List<Mission> missions = coll.getItems();
@@ -92,7 +91,6 @@ public class UserController {
         model.addAttribute("pageNo", coll.getPageNo());
         model.addAttribute("totalCount", coll.getTotalCount());
         model.addAttribute("totalPages", coll.getTotalPages());
-        model.addAttribute("comments", comments);
         return "index";
     }
 
@@ -374,7 +372,7 @@ public class UserController {
     @PostMapping("/addMission")
     public String addMission(Mission mission) {
         missionService.addMission(mission);
-        return "user/addMission";
+        return "redirect:/user/index";
     }
 
     @GetMapping("/submitMissionList/{userId}")

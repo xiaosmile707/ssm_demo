@@ -6,8 +6,8 @@
 <mapper namespace="com.hp.ssm.dao.UserDao">
     <insert id="addUser" parameterType="com.hp.ssm.model.User" useGeneratedKeys="true" keyProperty="user.id"
             keyColumn="id">
-        insert into user (email, name, password, isactive, money, rnauth)
-        values (#{user.email}, #{user.name}, #{user.password}, 0, 0, 0)
+        insert into user (email, name, password, isactive, money, rnauth, type)
+        values (#{user.email}, #{user.name}, #{user.password}, 0, 0, 0, 0)
     </insert>
     <select id="getExceptionUserByEmail" parameterType="java.lang.String" resultType="java.lang.Long">
         select count(id)
@@ -34,7 +34,8 @@
                idnumber,
                money,
                isactive,
-               rnauth
+               rnauth,
+               type
         from user
         where email = #{email}
     </select>
@@ -49,7 +50,8 @@
                idnumber,
                money,
                isactive,
-               rnauth
+               rnauth,
+               type
         from user
         where id = #{id}
     </select>

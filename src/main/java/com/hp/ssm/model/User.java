@@ -20,5 +20,5 @@ public class User {
     private Boolean rnauth;
     private String pic;
     private int verified;
-
+    private int type;
 }

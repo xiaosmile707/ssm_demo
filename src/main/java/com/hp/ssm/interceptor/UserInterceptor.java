@@ -33,7 +33,7 @@ public class UserInterceptor implements HandlerInterceptor {
     }
 
     private boolean checkURL(String url) {
-        if (url.startsWith("/img")||url.startsWith("/user")||url.startsWith("/admin")||url.startsWith("/error")) {
+        if (url.startsWith("/img") || url.startsWith("/user") || url.startsWith("/admin") || url.startsWith("/error") || url.startsWith("/express")) {
             return true;
         }
         switch (url) {
