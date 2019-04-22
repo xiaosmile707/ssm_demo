@@ -31,8 +31,8 @@
 <section id="blog" class="padding-top">
     <div class="container">
         <div class="row">
-<!--            class="col-md-9 col-sm-7"-->
-            <div  th:if="${session.user == null ||session.user.type == 0}">
+            <!--            class="col-md-9 col-sm-7"-->
+            <div th:if="${session.user == null ||session.user.type == 0}">
                 <div class="dynamic_content_wrapper">
                     <div class="dynamic_content">
                         <div id="function">
@@ -41,15 +41,19 @@
                                     <div class="shipping-search-detail"><!-- 查询表单 -->
                                         <div class="bill-number-wrapper">
                                             <div class="input-group">
-                                                <div class="tokenfield form-control focus"><input
+                                                <div class="tokenfield form-control focus"><input id="a"
+                                                        oninput="aa(event)" onporpertychange="aa(event)"
                                                         type="text" class="token-input" autocomplete="off"
                                                         placeholder="输入运单号进行查询，或上传二维码查询"
                                                         tabindex="0" style="min-width: 90px; width: 664px;"></div>
-                                                <label class="input-group-addon clear-inputs"><span
-                                                        class="sfi sfi-trash"></span></label><span id="queryBill"
-                                                                                                   type="button"
-                                                                                                   class="primary-button maidian"
-                                            >查询</span>
+                                                <a id="queryBill" type="button"
+                                                      class="primary-button maidian" href="">查询</a>
+                                            </div>
+                                            <div>
+                                                <form th:action="@{/user/index}" method="post" enctype="multipart/form-data">
+                                                    <input type="file" class="form-control" name="multipartFile" multiple="multiple">
+                                                    <button class="primary-button" type="submit">上传二维码</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div><!-- 中国大陆运单查询 -->
@@ -57,15 +61,20 @@
                                         <div class="my-bills">
                                             <div class="bill-title">我的包裹</div>
                                             <div class="bill-tab"></div>
+                                            <div class="row" th:if="missions != null">
+                                                <div class="col-sm-6 col-md-12">
+                                                    <div class="single-price price-one">
+                                                        <ul th:each="mission:${missions}">
+                                                            <li><a th:text="'时间:'+${#dates.format(mission.startTime,'yyyy-MM-dd hh:mm')}+' 由快递员：'+${mission.name}+'配送 马上发往：'+${mission.location}"></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -141,5 +150,17 @@
 <script type="text/javascript" th:src="@{/definebyme/js/wow.min.js}"></script>
 <script type="text/javascript" th:src="@{/definebyme/js/main.js}"></script>
 <script type="text/javascript" th:src="@{/definebyme/pageInfoSearch.js}"></script>
+<script type="text/JavaScript">
+    function aa(e){}
+</script>
+<script type="text/javascript">
+
+    $(function(){
+        $("#a").bind('input porpertychange',function(){
+            console.log($("#a").val());
+            $("#queryBill").attr("href", "/user/index?expressUUID="+$("#a").val());
+        });
+    });
+</script>
 </body>
 </html>

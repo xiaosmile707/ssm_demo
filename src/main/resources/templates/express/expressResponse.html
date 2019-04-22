@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/definebyme/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/lightbox.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/main.css}">
+    <link rel="stylesheet" th:href="@{/definebyme/css/responsive.css}">
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/definebyme/js/html5shiv.js}"></script>
+    <script th:src="@{/definebyme/js/respond.min.js}"></script>
+    <![endif]-->
+    <link rel="shortcut icon" th:href="@{/definebyme/images/ico/favicon.ico}">
+    <a style="display:scroll;position:fixed;bottom:0px;right:0px;" href="#" title="Back to Top"><img
+            src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/18-12-24/79736775.jpg" alt="Back to Top"
+            border="0" margin-right="0"/></a>
+</head><!--/head-->
+
+<body>
+<div th:replace="component/header::header"></div>
+<!--/#action-->
+
+<section id="shortcodes">
+    <div class="container">
+
+        <div id="tab-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul id="tab1" class="nav nav-tabs">
+                        <li class="active"><a href="#tab1-item1" data-toggle="tab">这是您生成邮寄订单二维码，请妥善保存</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="tab1-item1">
+                            <img th:src="@{/qrCode/{content}(content=${session.uuid})}">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-center bottom-separator" th:text="'订单号：'+${session.uuid}"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<div th:replace="component/footer::footer"></div>
+<script type="text/javascript" th:src="@{/definebyme/js/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/lightbox.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/wow.min.js}"></script>
+<script type="text/javascript" th:src="@{/definebyme/js/main.js}"></script>
+</body>
+</html>

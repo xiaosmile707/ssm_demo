@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/user/index}">主页</a></li>
-                    <li><a th:href="@{/express/add}">我要寄件 </a></li>
+                    <li><a th:href="@{/express/add}" th:if="${session.user}!=null">我要寄件 </a></li>
                     <li class="dropdown" th:if="${session.user != null && session.user.type == 1}"><a>我的任务 <i
                             class="fa fa-angle-down"></i></a>
                         <ul role="menu" class="sub-menu" th:if="${session.user}!=null">
@@ -34,8 +34,8 @@
                             <li><a th:href="@{/user/{userId}/missionList/3(userId=${session.user.id})}">已经结束的任务</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a>个人中心 <i class="fa fa-angle-down"></i></a>
-                        <ul role="menu" class="sub-menu" th:if="${session.user}!=null">
+                    <li class="dropdown" th:if="${session.user}!=null"><a>个人中心 <i class="fa fa-angle-down"></i></a>
+                        <ul role="menu" class="sub-menu" >
                             <li><a th:href="@{/user/userDetail/{userId}(userId=${session.user.id})}">我的信息</a></li>
                             <li><a th:href="@{/user/submitMissionList/{userId}(userId=${session.user.id})}">我的寄件</a></li>
                             <li><a th:href="@{/user/twoSteps}">两步验证</a></li>

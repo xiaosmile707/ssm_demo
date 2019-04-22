@@ -18,4 +18,6 @@ public interface MissionService {
     void addMissionPic(Integer missionId, String pic);
 
     String getMissionPic(Integer missionId);
+
+    List<Mission> getMissionsByUUID(String expressUUID);
 }

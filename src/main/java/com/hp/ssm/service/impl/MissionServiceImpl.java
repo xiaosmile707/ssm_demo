@@ -101,4 +101,9 @@ public class MissionServiceImpl implements MissionService {
     public String getMissionPic(Integer missionId) {
         return missionDao.getMissionPic(missionId);
     }
+
+    @Override
+    public List<Mission> getMissionsByUUID(String expressUUID) {
+        return missionDao.getMissionsByUUID(expressUUID);
+    }
 }

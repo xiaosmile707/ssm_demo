@@ -74,4 +74,10 @@
         from mission
         where id = #{missionId}
     </select>
+    <select id="getMissionsByUUID" resultType="com.hp.ssm.model.Mission">
+        select *
+        from mission
+        where expressUUID = #{expressUUID}
+order by step
+    </select>
 </mapper>

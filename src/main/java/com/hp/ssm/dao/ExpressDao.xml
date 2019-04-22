@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hp.ssm.dao.ExpressDao">
+
+    <insert id="addExpress">
+        insert into express(uuid, userId, name, status, type, sendName, receiveName, sendCity, sendAddress, receiveCity,
+                            receiveAddress, money, sendTime, receiveTime, sendPhone, receivePhone, weight)
+        VALUES (#{express.uuid}, #{express.userId}, #{express.name}, 0, #{express.type},
+                #{express.sendName},
+                #{express.receiveName}, #{express.sendCity}, #{express.sendAddress}, #{express.receiveCity},
+                #{express.receiveAddress}, #{express.money}, #{express.sendTime}, #{express.receiveTime},
+                #{express.sendPhone}, #{express.receivePhone}, #{express.weight})
+    </insert>
+</mapper>

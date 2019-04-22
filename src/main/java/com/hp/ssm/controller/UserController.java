@@ -1,6 +1,13 @@
 package com.hp.ssm.controller;
 
 
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import com.hp.ssm.model.Comment;
 import com.hp.ssm.model.Mission;
 import com.hp.ssm.model.PageCollection;
@@ -26,8 +33,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,7 +47,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author wyq
@@ -79,19 +92,53 @@ public class UserController {
     }
 
     @GetMapping("/index")
-    public String getIndex(Model model, Integer pageNo) {
-        int pagesNo = (pageNo == null) ? 1 : pageNo;
-        int pageSize = 4;
-        PageCollection<Mission> coll = missionService.getAllMission(pageSize, pagesNo);
-        //missions可能为空
-        List<Mission> missions = coll.getItems();
-        List<Mission> missionList = new ArrayList<>(missions);
-        //渲染model返回分页信息
-        model.addAttribute("missions", missionList);
-        model.addAttribute("pageNo", coll.getPageNo());
-        model.addAttribute("totalCount", coll.getTotalCount());
-        model.addAttribute("totalPages", coll.getTotalPages());
+    public String getIndex(Model model,String expressUUID,HttpSession session,Integer pageNo) {
+        User user = (User) session.getAttribute("user");
+
+        List<Mission> missions = new ArrayList<>();
+        if (expressUUID != null && !"".equals(expressUUID)) {
+            missions = missionService.getMissionsByUUID(expressUUID);
+        }
+        if (missions != null && !missions.isEmpty()) {
+            model.addAttribute("missions",missions);
+        }
+
+        if (user != null && user.getType() == 1) {
+            int pagesNo = (pageNo == null) ? 1 : pageNo;
+            int pageSize = 4;
+            PageCollection<Mission> coll = missionService.getAllMission(pageSize, pagesNo);
+            //missions可能为空
+            missions = coll.getItems();
+            List<Mission> missionList = new ArrayList<>(missions);
+            //渲染model返回分页信息
+            model.addAttribute("missions", missionList);
+            model.addAttribute("pageNo", coll.getPageNo());
+            model.addAttribute("totalCount", coll.getTotalCount());
+            model.addAttribute("totalPages", coll.getTotalPages());
+        }
+
         return "index";
+    }
+
+    @PostMapping("/index")
+    public String addIndex(@RequestParam MultipartFile multipartFile) throws IOException, NotFoundException {
+        MultiFormatReader formatReader = new MultiFormatReader();
+        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+        BufferedImage image = ImageIO.read(file);
+        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(image)));
+
+        HashMap hints = new HashMap();
+
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+
+        Result result = formatReader.decode(binaryBitmap, hints);
+        System.out.println("解析结果：" + result.toString());
+        System.out.println("二维码格式类型：" + result.getBarcodeFormat());
+        System.out.println("二维码文本" + result.getText());
+        return "redirect:/user/index?expressUUID="+result.toString();
     }
 
     @GetMapping("/twoStepsValidate")

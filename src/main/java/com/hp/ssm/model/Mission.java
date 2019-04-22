@@ -24,4 +24,7 @@ public class Mission {
     private List<Comment> comments;
     private String pic;
     private int type;
+    private String expressUUID;
+    private String location;
+    private Integer step;
 }

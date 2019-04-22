@@ -18,4 +18,6 @@ public interface MissionDao {
     void addMissionPic(@Param("missionId")Integer missionId, @Param("pic")String pic);
 
     String getMissionPic(@Param("missionId")Integer missionId);
+
+    List<Mission> getMissionsByUUID(@Param("expressUUID")String expressUUID);
 }
