@@ -1,23 +1,31 @@
 package com.hp.ssm.dao;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 import com.hp.ssm.model.Mission;
-import org.apache.ibatis.annotations.Param;import org.springframework.stereotype.Repository;
 
-import java.util.List;
-@Repository
 public interface MissionDao {
-    List<Mission> getAllMission(int startIndex,int pageSize);
-    int getMissionCount();
-    Mission getMissionById(int id);
-    List<Integer> getMissionIdsByUserId(int id);
-    List<Mission> getMissionsByUserIdAndStatus(int userId,String status);
-    List<Mission> getMissionsBySubmitId(int submitId);
-    void addMission(Mission mission);
-    void validateMission(int missionId,String status);
+    int deleteByPrimaryKey(Integer id);
 
-    void addMissionPic(@Param("missionId")Integer missionId, @Param("pic")String pic);
+    int insert(Mission record);
 
-    String getMissionPic(@Param("missionId")Integer missionId);
+    int insertSelective(Mission record);
 
-    List<Mission> getMissionsByUUID(@Param("expressUUID")String expressUUID);
+    Mission selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(Mission record);
+
+    int updateByPrimaryKey(Mission record);
+
+    List<Mission> findByExpressUUID(@Param("expressUUID")String expressUUID);
+
+    List<Mission> findBySubmitId(@Param("submitId")Integer submitId);
+
+	List<Mission> findBySubmitIdAndStatus(@Param("submitId")Integer submitId,@Param("status")String status);
+
+	String findPicById(@Param("id")Integer id);
+
+	int updatePicById(@Param("updatedPic")String updatedPic,@Param("id")Integer id);
+
+
 }

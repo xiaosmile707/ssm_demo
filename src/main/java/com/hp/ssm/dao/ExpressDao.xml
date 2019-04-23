@@ -1,7 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hp.ssm.dao.ExpressDao">
-
+    <resultMap id="BaseResultMap" type="com.hp.ssm.model.Express">
+        <!--@mbg.generated-->
+        <id column="uuid" jdbcType="CHAR" property="uuid"/>
+        <result column="userId" jdbcType="INTEGER" property="userId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="sendName" jdbcType="VARCHAR" property="sendName"/>
+        <result column="receiveName" jdbcType="VARCHAR" property="receiveName"/>
+        <result column="sendCity" jdbcType="VARCHAR" property="sendCity"/>
+        <result column="sendAddress" jdbcType="VARCHAR" property="sendAddress"/>
+        <result column="receiveCity" jdbcType="VARCHAR" property="receiveCity"/>
+        <result column="receiveAddress" jdbcType="VARCHAR" property="receiveAddress"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="sendTime" jdbcType="TIMESTAMP" property="sendTime"/>
+        <result column="receiveTime" jdbcType="TIMESTAMP" property="receiveTime"/>
+        <result column="sendPhone" jdbcType="VARCHAR" property="sendPhone"/>
+        <result column="receivePhone" jdbcType="VARCHAR" property="receivePhone"/>
+        <result column="weight" jdbcType="DOUBLE" property="weight"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        uuid, userId, `name`, `status`, `type`, sendName, receiveName, sendCity, sendAddress,
+        receiveCity, receiveAddress, money, sendTime, receiveTime, sendPhone, receivePhone,
+        weight
+    </sql>
     <insert id="addExpress">
         insert into express(uuid, userId, name, status, type, sendName, receiveName, sendCity, sendAddress, receiveCity,
                             receiveAddress, money, sendTime, receiveTime, sendPhone, receivePhone, weight)
@@ -11,4 +36,222 @@
                 #{express.receiveAddress}, #{express.money}, #{express.sendTime}, #{express.receiveTime},
                 #{express.sendPhone}, #{express.receivePhone}, #{express.weight})
     </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from express
+        where uuid = #{uuid,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        delete from express
+        where uuid = #{uuid,jdbcType=CHAR}
+    </delete>
+    <insert id="insert" keyColumn="uuid" keyProperty="uuid" parameterType="com.hp.ssm.model.Express"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into express (userId, `name`, `status`,
+        `type`, sendName, receiveName,
+        sendCity, sendAddress, receiveCity,
+        receiveAddress, money, sendTime,
+        receiveTime, sendPhone, receivePhone,
+        weight)
+        values (#{userid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+        #{type,jdbcType=VARCHAR}, #{sendname,jdbcType=VARCHAR}, #{receivename,jdbcType=VARCHAR},
+        #{sendcity,jdbcType=VARCHAR}, #{sendaddress,jdbcType=VARCHAR}, #{receivecity,jdbcType=VARCHAR},
+        #{receiveaddress,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{sendtime,jdbcType=TIMESTAMP},
+        #{receivetime,jdbcType=TIMESTAMP}, #{sendphone,jdbcType=VARCHAR}, #{receivephone,jdbcType=VARCHAR},
+        #{weight,jdbcType=DOUBLE})
+    </insert>
+    <insert id="insertSelective" keyColumn="uuid" keyProperty="uuid" parameterType="com.hp.ssm.model.Express"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into express
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null">
+                userId,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="sendname != null">
+                sendName,
+            </if>
+            <if test="receivename != null">
+                receiveName,
+            </if>
+            <if test="sendcity != null">
+                sendCity,
+            </if>
+            <if test="sendaddress != null">
+                sendAddress,
+            </if>
+            <if test="receivecity != null">
+                receiveCity,
+            </if>
+            <if test="receiveaddress != null">
+                receiveAddress,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="sendtime != null">
+                sendTime,
+            </if>
+            <if test="receivetime != null">
+                receiveTime,
+            </if>
+            <if test="sendphone != null">
+                sendPhone,
+            </if>
+            <if test="receivephone != null">
+                receivePhone,
+            </if>
+            <if test="weight != null">
+                weight,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="sendname != null">
+                #{sendname,jdbcType=VARCHAR},
+            </if>
+            <if test="receivename != null">
+                #{receivename,jdbcType=VARCHAR},
+            </if>
+            <if test="sendcity != null">
+                #{sendcity,jdbcType=VARCHAR},
+            </if>
+            <if test="sendaddress != null">
+                #{sendaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="receivecity != null">
+                #{receivecity,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveaddress != null">
+                #{receiveaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="sendtime != null">
+                #{sendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="receivetime != null">
+                #{receivetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendphone != null">
+                #{sendphone,jdbcType=VARCHAR},
+            </if>
+            <if test="receivephone != null">
+                #{receivephone,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                #{weight,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hp.ssm.model.Express">
+        <!--@mbg.generated-->
+        update express
+        <set>
+            <if test="userid != null">
+                userId = #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="sendname != null">
+                sendName = #{sendname,jdbcType=VARCHAR},
+            </if>
+            <if test="receivename != null">
+                receiveName = #{receivename,jdbcType=VARCHAR},
+            </if>
+            <if test="sendcity != null">
+                sendCity = #{sendcity,jdbcType=VARCHAR},
+            </if>
+            <if test="sendaddress != null">
+                sendAddress = #{sendaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="receivecity != null">
+                receiveCity = #{receivecity,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveaddress != null">
+                receiveAddress = #{receiveaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="sendtime != null">
+                sendTime = #{sendtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="receivetime != null">
+                receiveTime = #{receivetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendphone != null">
+                sendPhone = #{sendphone,jdbcType=VARCHAR},
+            </if>
+            <if test="receivephone != null">
+                receivePhone = #{receivephone,jdbcType=VARCHAR},
+            </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where uuid = #{uuid,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hp.ssm.model.Express">
+        <!--@mbg.generated-->
+        update express
+        set userId = #{userid,jdbcType=INTEGER},
+        `name` = #{name,jdbcType=VARCHAR},
+        `status` = #{status,jdbcType=TINYINT},
+        `type` = #{type,jdbcType=VARCHAR},
+        sendName = #{sendname,jdbcType=VARCHAR},
+        receiveName = #{receivename,jdbcType=VARCHAR},
+        sendCity = #{sendcity,jdbcType=VARCHAR},
+        sendAddress = #{sendaddress,jdbcType=VARCHAR},
+        receiveCity = #{receivecity,jdbcType=VARCHAR},
+        receiveAddress = #{receiveaddress,jdbcType=VARCHAR},
+        money = #{money,jdbcType=DECIMAL},
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+        receiveTime = #{receivetime,jdbcType=TIMESTAMP},
+        sendPhone = #{sendphone,jdbcType=VARCHAR},
+        receivePhone = #{receivephone,jdbcType=VARCHAR},
+        weight = #{weight,jdbcType=DOUBLE}
+        where uuid = #{uuid,jdbcType=CHAR}
+    </update>
+
+    <!--auto generated by MybatisCodeHelper on 2019-04-22-->
+    <select id="findByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from express
+        where userId=#{userId,jdbcType=INTEGER} order by sendTime
+    </select>
 </mapper>

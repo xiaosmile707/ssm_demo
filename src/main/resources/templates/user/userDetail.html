@@ -63,8 +63,8 @@
                         <li th:if="${user.id}==${session.user.id}" th:inline="text">账户余额&nbsp;&nbsp;&nbsp;<i
                                 class="fa fa-angle-right">&nbsp;[[${user.money}]]</i></li>
                         <li th:if="${user.id}==${session.user.id}">身份证号&nbsp;&nbsp;&nbsp;<i
-                                class="fa fa-angle-right"></i><label>
-                            <input type="text" name="idNumber" th:attr="placeholder=${user.idNumber}" th:value="${user.idNumber}">
+                                class="fa fa-angle-right"></i><label th:if="${user.verified == 2}" th:text="${user.idNumber}">
+<!--                            <input type="text" name="idNumber" th:attr="placeholder=${user.idNumber}" th:value="${user.idNumber}">-->
                         </label></li>
                     </ul>
                         <input style="display: none" th:value="${session.user.id}" name="id">
@@ -72,40 +72,6 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!--/#portfolio-information-->
-
-<section id="related-work" class="padding-top padding-bottom">
-    <div class="container">
-        <div class="row">
-            <h1 class="title text-center">我的订单</h1>
-            <div th:each="mission:${missions}">
-                <div class="col-sm-3">
-                    <div class="portfolio-wrapper">
-                        <div class="portfolio-single">
-                            <div class="portfolio-thumb">
-                                <img width="261" height="269"
-                                     th:src="@{'/mission/pic/'+${mission.id}}"
-                                     class="img-responsive" alt="">
-                            </div>
-                            <div class="portfolio-view">
-                                <ul class="nav nav-pills">
-                                    <li>
-                                        <a th:href="@{'/mission/pic/'+${mission.id}}"
-                                           data-lightbox="example-set"><i
-                                                class="fa fa-eye"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="portfolio-info ">
-                            <h2 th:text="${mission.name}"></h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </section>

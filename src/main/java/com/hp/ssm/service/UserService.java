@@ -32,6 +32,4 @@ public interface UserService {
     void addUserPic(int userId, String userPic);
 
     String getUserPic(Integer userId);
-
-    void addMissionRate(int missionId);
 }

@@ -10,21 +10,17 @@ import java.util.List;
 public class Mission {
     private int id;
     private int submitId;
-    private String name;
-    private String submitUserName;
     private String content;
     private String description;
-    private BigDecimal reward;
     private Date startTime;
     private Date endTime;
     private String status;
-    private int rate;
-    private String startMouth;
-    private int commentCount;
-    private List<Comment> comments;
     private String pic;
     private int type;
     private String expressUUID;
     private String location;
     private Integer step;
+    private String destination;
+    private Integer receiveId;
+    private String receiveUserName;
 }

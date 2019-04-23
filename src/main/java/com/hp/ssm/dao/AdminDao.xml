@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hp.ssm.dao.AdminDao">
+    <resultMap id="BaseResultMap" type="com.hp.ssm.model.Admin">
+        <!--@mbg.generated-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="account" jdbcType="VARCHAR" property="account"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="twostepsecret" jdbcType="VARCHAR" property="twoStepSecret"/>
+        <result column="active" jdbcType="INTEGER" property="active"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, account, `password`, twostepsecret, active
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete from admin
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hp.ssm.model.Admin" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into admin (account, `password`, twostepsecret,
+        active)
+        values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{twostepsecret,jdbcType=VARCHAR},
+        #{active,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hp.ssm.model.Admin"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="account != null">
+                account,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="twostepsecret != null">
+                twostepsecret,
+            </if>
+            <if test="active != null">
+                active,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="twostepsecret != null">
+                #{twostepsecret,jdbcType=VARCHAR},
+            </if>
+            <if test="active != null">
+                #{active,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hp.ssm.model.Admin">
+        <!--@mbg.generated-->
+        update admin
+        <set>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="twostepsecret != null">
+                twostepsecret = #{twostepsecret,jdbcType=VARCHAR},
+            </if>
+            <if test="active != null">
+                active = #{active,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hp.ssm.model.Admin">
+        <!--@mbg.generated-->
+        update admin
+        set account = #{account,jdbcType=VARCHAR},
+        `password` = #{password,jdbcType=VARCHAR},
+        twostepsecret = #{twostepsecret,jdbcType=VARCHAR},
+        active = #{active,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

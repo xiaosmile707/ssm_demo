@@ -40,8 +40,6 @@ public class UtilsController {
         String format = "png";
         int width = 300;
         int height = 300;
-        //定义内容
-
         //response设置返回内容格式
         res.setContentType("image/" + format);
         if (!"".equals(secret)) {
@@ -59,11 +57,33 @@ public class UtilsController {
         }
     }
 
+    @GetMapping("/QRCode/{content}")
+    public void getQRCOde(@PathVariable("content") String content, HttpServletResponse res) throws IOException, WriterException {
+        //设置格式
+        String format = "png";
+        int width = 300;
+        int height = 300;
+        //response设置返回内容格式
+        res.setContentType("image/" + format);
+        if (content != null && !"".equals(content)) {
+            //定义二维码的参数
+            HashMap hints = new HashMap();
+            hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            hints.put(EncodeHintType.MARGIN, 2);
+            //生成二维码
+            OutputStream stream = res.getOutputStream();
+            BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
+            MatrixToImageWriter.writeToStream(bitMatrix, format, stream);
+            stream.flush();
+            stream.close();
+        }
+    }
+
     @GetMapping("/user/pic/{userId}")
     public void getUserPic(@PathVariable Integer userId, HttpServletResponse res) throws IOException {
         String userPicAddress = userService.getUserPic(userId);
-        File file;
-        file = new File("E:\\upload\\NULL.jpg");
+        File file = new File("E:\\upload\\NULL.jpg");
         if (userPicAddress != null && !"".equals(userPicAddress)) {
             file = new File(userPicAddress);
         }
@@ -91,10 +111,7 @@ public class UtilsController {
         if (missionPicAddress != null && !"".equals(missionPicAddress)) {
             file = new File(missionPicAddress);
         }
-
-
         FileInputStream fis = new FileInputStream(file);
-
         if (fis != null) {
             int i = fis.available(); // 得到文件大小
             byte[] data = new byte[i];

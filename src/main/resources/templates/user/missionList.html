@@ -37,7 +37,7 @@
                         <p class="plan-name" th:text="${status}"></p>
                     </div>
                     <ul th:each="mission:${missions}">
-                        <li><a th:href="@{/user/receiveMissionDetail/{missionId}(missionId=${mission.id})}" th:text="${mission.name}+'  '+${mission.description}"></a></li>
+                        <li><a th:href="@{/user/receiveMissionDetail/{missionId}(missionId=${mission.id})}" th:text="${mission.receiveUserName}+'  '+${mission.description}"></a></li>
                     </ul>
                 </div>
             </div>

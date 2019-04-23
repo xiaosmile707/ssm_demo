@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class Admin {
-    private int id;
+    private Integer id;
     private String account;
     private String password;
-    private String twoStepsSecret;
+    private String twoStepSecret;
+    private Integer active;
 }

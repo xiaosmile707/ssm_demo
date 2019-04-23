@@ -1,83 +1,250 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hp.ssm.dao.MissionDao">
-    <select id="getAllMission" resultType="com.hp.ssm.model.Mission">
-        select mission.id,
-        submitid,
-        (select name from user where user.id=submitid) as submitUserName,
-        content,
-        description,
-        reward,
-        starttime,
-        endtime,
-        status,
-        rate,
-        mission.name
-        from mission,user where user.id=submitid
-        <if test="pageSize gt 0 and startIndex gt -1">
-            limit #{startIndex},#{pageSize}
-        </if>
-    </select>
-    <select id="getMissionById" resultType="com.hp.ssm.model.Mission">
-        select mission.id,
-               submitid,
-               (select name from user where user.id = submitid) as submitUserName,
-               content,
-               description,
-               reward,
-               starttime,
-               endtime,
-               status,
-               rate,
-               mission.name
-        from mission,
-             user
-        where mission.id = #{id}
-          and user.id = submitid
-    </select>
-    <select id="getMissionCount" resultType="int">
-        select count(id)
+    <resultMap id="BaseResultMap" type="com.hp.ssm.model.Mission">
+        <!--@mbg.generated-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="submitid" jdbcType="INTEGER" property="submitId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="starttime" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="endtime" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="expressUUID" jdbcType="CHAR" property="expressUUID"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="step" jdbcType="INTEGER" property="step"/>
+        <result column="destination" jdbcType="VARCHAR" property="destination"/>
+        <result column="receiveid" jdbcType="INTEGER" property="receiveId"/>
+        <result column="receiveUserName" jdbcType="VARCHAR" property="receiveUserName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, submitid, content, description, starttime, endtime, `status`, pic, `type`, expressUUID,
+        `location`, step, destination, receiveid
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        (select name from user where user.id = receiveid) as receiveUserName
         from mission
+        where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="getMissionIdsByUserId" resultType="java.lang.Integer">
-        select missionid
-        from user_mission_ass
-        where receiverid = #{id}
-    </select>
-    <select id="getMissionsByUserIdAndStatus" resultType="com.hp.ssm.model.Mission">
-        select id, name, description, reward, starttime, endtime
-        from mission
-        where id in (select missionid from user_mission_ass where receiverid = #{userId})
-          and status = #{status}
-    </select>
-    <insert id="addMission" parameterType="com.hp.ssm.model.Mission">
-        insert into mission (submitid, content, description, reward, starttime, endtime, status, name)
-        VALUES (#{submitId}, #{content}, #{description}, #{reward}, #{startTime}, #{endTime}, #{status}, #{name})
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete from mission
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hp.ssm.model.Mission"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into mission (submitid, content, description,
+        starttime, endtime, `status`,
+        pic, `type`, expressUUID,
+        `location`, step, destination,
+        receiveid)
+        values (#{submitid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+        #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR},
+        #{pic,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{expressuuid,jdbcType=CHAR},
+        #{location,jdbcType=VARCHAR}, #{step,jdbcType=INTEGER}, #{destination,jdbcType=VARCHAR},
+        #{receiveid,jdbcType=INTEGER})
     </insert>
-    <select id="getMissionsBySubmitId" resultType="com.hp.ssm.model.Mission">
-        select id, name, description, reward, starttime, endtime, status
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hp.ssm.model.Mission"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into mission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="submitid != null">
+                submitid,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="starttime != null">
+                starttime,
+            </if>
+            <if test="endtime != null">
+                endtime,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="expressuuid != null">
+                expressUUID,
+            </if>
+            <if test="location != null">
+                `location`,
+            </if>
+            <if test="step != null">
+                step,
+            </if>
+            <if test="destination != null">
+                destination,
+            </if>
+            <if test="receiveid != null">
+                receiveid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="submitid != null">
+                #{submitid,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null">
+                #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endtime != null">
+                #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="pic != null">
+                #{pic,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="expressuuid != null">
+                #{expressuuid,jdbcType=CHAR},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="step != null">
+                #{step,jdbcType=INTEGER},
+            </if>
+            <if test="destination != null">
+                #{destination,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveid != null">
+                #{receiveid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hp.ssm.model.Mission">
+        <!--@mbg.generated-->
+        update mission
+        <set>
+            <if test="submitid != null">
+                submitid = #{submitid,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null">
+                starttime = #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endtime != null">
+                endtime = #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="pic != null">
+                pic = #{pic,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `type` = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="expressuuid != null">
+                expressUUID = #{expressuuid,jdbcType=CHAR},
+            </if>
+            <if test="location != null">
+                `location` = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="step != null">
+                step = #{step,jdbcType=INTEGER},
+            </if>
+            <if test="destination != null">
+                destination = #{destination,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveid != null">
+                receiveid = #{receiveid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hp.ssm.model.Mission">
+        <!--@mbg.generated-->
+        update mission
+        set submitid = #{submitid,jdbcType=INTEGER},
+        content = #{content,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR},
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+        `status` = #{status,jdbcType=VARCHAR},
+        pic = #{pic,jdbcType=VARCHAR},
+        `type` = #{type,jdbcType=INTEGER},
+        expressUUID = #{expressuuid,jdbcType=CHAR},
+        `location` = #{location,jdbcType=VARCHAR},
+        step = #{step,jdbcType=INTEGER},
+        destination = #{destination,jdbcType=VARCHAR},
+        receiveid = #{receiveid,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--auto generated by MybatisCodeHelper on 2019-04-22-->
+    <select id="findByExpressUUID" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        (select name from user where user.id = receiveid) as receiveUserName
         from mission
-        where submitid = #{submitId}
+        where expressUUID=#{expressUUID,jdbcType=CHAR}
     </select>
-    <update id="validateMission" parameterType="com.hp.ssm.model.Mission">
-        update mission
-        set status=#{status}
-        where id = #{missionId}
-    </update>
-    <update id="addMissionPic">
-        update mission
-        set pic = #{pic}
-        where id = #{missionId}
-    </update>
-    <select id="getMissionPic" resultType="java.lang.String">
+
+    <!--auto generated by MybatisCodeHelper on 2019-04-22-->
+    <select id="findBySubmitId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        (select name from user where user.id = receiveid) as receiveUserName
+        from mission
+        where submitid=#{submitId,jdbcType=INTEGER}
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2019-04-22-->
+    <select id="findBySubmitIdAndStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        (select name from user where user.id = receiveid) as receiveUserName
+        from mission
+        where submitid=#{submitId,jdbcType=INTEGER} and `status`=#{status,jdbcType=VARCHAR}
+    </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-04-22-->
+    <select id="findPicById" resultType="java.lang.String">
         select pic
         from mission
-        where id = #{missionId}
+        where id = #{id,jdbcType=INTEGER}
     </select>
-    <select id="getMissionsByUUID" resultType="com.hp.ssm.model.Mission">
-        select *
-        from mission
-        where expressUUID = #{expressUUID}
-order by step
-    </select>
+
+<!--auto generated by MybatisCodeHelper on 2019-04-22-->
+    <update id="updatePicById">
+        update mission
+        set pic=#{updatedPic,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

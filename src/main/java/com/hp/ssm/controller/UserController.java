@@ -8,12 +8,9 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-import com.hp.ssm.model.Comment;
 import com.hp.ssm.model.Mission;
-import com.hp.ssm.model.PageCollection;
 import com.hp.ssm.model.User;
 import com.hp.ssm.model.ValidateTable;
-import com.hp.ssm.service.CommentService;
 import com.hp.ssm.service.MissionService;
 import com.hp.ssm.service.UserService;
 import com.hp.ssm.service.ValidateService;
@@ -63,8 +60,6 @@ public class UserController {
     private ValidateService validateService;
     @Autowired
     private MissionService missionService;
-    @Autowired
-    private CommentService commentService;
 
     @GetMapping("/login")
     public String getLogin() {
@@ -92,7 +87,7 @@ public class UserController {
     }
 
     @GetMapping("/index")
-    public String getIndex(Model model,String expressUUID,HttpSession session,Integer pageNo) {
+    public String getIndex(Model model, String expressUUID, HttpSession session, Integer pageNo) {
         User user = (User) session.getAttribute("user");
 
         List<Mission> missions = new ArrayList<>();
@@ -100,22 +95,22 @@ public class UserController {
             missions = missionService.getMissionsByUUID(expressUUID);
         }
         if (missions != null && !missions.isEmpty()) {
-            model.addAttribute("missions",missions);
+            model.addAttribute("missions", missions);
         }
 
-        if (user != null && user.getType() == 1) {
-            int pagesNo = (pageNo == null) ? 1 : pageNo;
-            int pageSize = 4;
-            PageCollection<Mission> coll = missionService.getAllMission(pageSize, pagesNo);
-            //missions可能为空
-            missions = coll.getItems();
-            List<Mission> missionList = new ArrayList<>(missions);
-            //渲染model返回分页信息
-            model.addAttribute("missions", missionList);
-            model.addAttribute("pageNo", coll.getPageNo());
-            model.addAttribute("totalCount", coll.getTotalCount());
-            model.addAttribute("totalPages", coll.getTotalPages());
-        }
+//        if (user != null && user.getType() == 1) {
+//            int pagesNo = (pageNo == null) ? 1 : pageNo;
+//            int pageSize = 4;
+//            PageCollection<Mission> coll = missionService.getAllMission(pageSize, pagesNo);
+//            //missions可能为空
+//            missions = coll.getItems();
+//            List<Mission> missionList = new ArrayList<>(missions);
+//            //渲染model返回分页信息
+//            model.addAttribute("missions", missionList);
+//            model.addAttribute("pageNo", coll.getPageNo());
+//            model.addAttribute("totalCount", coll.getTotalCount());
+//            model.addAttribute("totalPages", coll.getTotalPages());
+//        }
 
         return "index";
     }
@@ -135,10 +130,10 @@ public class UserController {
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 
         Result result = formatReader.decode(binaryBitmap, hints);
-        System.out.println("解析结果：" + result.toString());
-        System.out.println("二维码格式类型：" + result.getBarcodeFormat());
-        System.out.println("二维码文本" + result.getText());
-        return "redirect:/user/index?expressUUID="+result.toString();
+        if(file.exists()){
+            file.delete();
+        }
+        return "redirect:/user/index?expressUUID=" + result.toString();
     }
 
     @GetMapping("/twoStepsValidate")
@@ -330,11 +325,9 @@ public class UserController {
     public String getMissionDetail(@PathVariable Integer missionId, Model model) {
         missionId = (missionId == null) ? 1 : missionId;
         Mission mission = missionService.getMissionById(missionId);
-        List<Comment> comments = commentService.getCommentsByMissionId(missionId);
         String missionUserName = userService.getUserById(mission.getSubmitId()).getName();
         model.addAttribute("missionUserName", missionUserName);
         model.addAttribute("mission", mission);
-        model.addAttribute("comments", comments);
         return "user/missionDetail";
     }
 
@@ -342,11 +335,9 @@ public class UserController {
     public String getSubmitMissionDetail(@PathVariable Integer missionId, Model model) {
         missionId = (missionId == null) ? 1 : missionId;
         Mission mission = missionService.getMissionById(missionId);
-        List<Comment> comments = commentService.getCommentsByMissionId(missionId);
         String missionUserName = userService.getUserById(mission.getSubmitId()).getName();
         model.addAttribute("missionUserName", missionUserName);
         model.addAttribute("mission", mission);
-        model.addAttribute("comments", comments);
         return "user/submitMissionDetail";
     }
 
@@ -354,31 +345,17 @@ public class UserController {
     public String getReceiveMissionDetail(@PathVariable Integer missionId, Model model) {
         missionId = (missionId == null) ? 1 : missionId;
         Mission mission = missionService.getMissionById(missionId);
-        List<Comment> comments = commentService.getCommentsByMissionId(missionId);
         String missionUserName = userService.getUserById(mission.getSubmitId()).getName();
         model.addAttribute("missionUserName", missionUserName);
         model.addAttribute("mission", mission);
-        model.addAttribute("comments", comments);
         return "user/receiveMissionDetail";
-    }
-
-    @PostMapping("/addComment")
-    public String addComment(Integer missionId, Integer submitId, String content) {
-        Comment comment = new Comment();
-        comment.setSubmitId(submitId);
-        comment.setMissionId(missionId);
-        comment.setContent(content);
-        commentService.addComment(comment);
-        return "redirect:/user/missionDetail/" + missionId;
     }
 
     @GetMapping("/userDetail/{userId}")
     public String getUserDetail(@PathVariable Integer userId, Model model) {
         userId = (userId == null) ? 1 : userId;
         User user = userService.getUserById(userId);
-        List<Mission> missions = missionService.getMissionsById(userId);
         model.addAttribute("user", user);
-        model.addAttribute("missions", missions);
         return "user/userDetail";
     }
 
@@ -424,21 +401,21 @@ public class UserController {
 
     @GetMapping("/submitMissionList/{userId}")
     public String getSubmitMissionList(@PathVariable Integer userId, Model model) {
-        List<Mission> missions = missionService.getMissionsBySubmitId(userId);
+        List<Mission> missions = missionService.getMissionsBySubmitUserId(userId);
         model.addAttribute("missions", missions);
         return "user/submitMissionList";
     }
 
-    @PostMapping("/validateMission")
-    public String validateMission(Integer missionId, String status) {
-        if ("未开始".equals(status)) {
-            missionService.validateMission(missionId, "正在进行");
-            return "redirect:/user/receiveMissionDetail/" + missionId;
-        } else {
-            missionService.validateMission(missionId, "已完成");
-            return "redirect:/user/submitMissionDetail/" + missionId;
-        }
-    }
+//    @PostMapping("/validateMission")
+//    public String validateMission(Integer missionId, String status) {
+//        if ("未开始".equals(status)) {
+//            missionService.validateMission(missionId, "正在进行");
+//            return "redirect:/user/receiveMissionDetail/" + missionId;
+//        } else {
+//            missionService.validateMission(missionId, "已完成");
+//            return "redirect:/user/submitMissionDetail/" + missionId;
+//        }
+//    }
 
     @PostMapping("/realNameAuth")
     public String realNameAuth(Integer userId, String idNumber) {
@@ -453,12 +430,6 @@ public class UserController {
         Files.write(path, bytes);
         userService.addUserPic(userId, path.toString());
         return "redirect:/user/userDetail/" + userId;
-    }
-
-    @GetMapping("/mission/rate/{missionId}")
-    public String addRate(@PathVariable int missionId) {
-        userService.addMissionRate(missionId);
-        return "redirect:/user/index";
     }
 
     @InitBinder

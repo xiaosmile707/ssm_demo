@@ -36,6 +36,4 @@ public interface UserDao {
     void addUserPic(@Param("userId") int userId, @Param("userPic") String userPic);
 
     String getUserPic(@Param("userId")Integer userId);
-
-    void addMissionRate(@Param("missionId")int missionId);
 }

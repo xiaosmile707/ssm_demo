@@ -43,15 +43,8 @@
                                      width="850" height="400" class="img-responsive" alt="">
                             </div>
                             <div class="post-content overflow">
-                                <h2 class="post-title bold" th:text="${mission.name}"></h2><br>
+                                <h2 class="post-title bold" th:text="${mission.receiveUserName}"></h2><br>
                                 <p th:text="${mission.content}"></p>
-                                <div class="post-bottom overflow">
-                                    <ul class="nav navbar-nav post-nav">
-                                        <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                        <li><a href="#" th:inline="text"><i class="fa fa-heart"></i>[[${mission.rate}+'
-                                            赞']]</a></li>
-                                    </ul>
-                                </div>
                                 <form th:action="@{/user/validateMission}" method="post">
                                     <input type="number" style="display: none" th:value="${mission.id}" name="missionId">
                                     <input type="text" style="display: none" th:value="${mission.status}" name="status">
@@ -60,7 +53,7 @@
                                 <div class="author-profile padding">
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <img src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
+                                            <img th:src="@{'/user/pic/'+${mission.submitId}}"
                                                  alt="">
                                         </div>
                                         <div class="col-sm-10">
@@ -68,43 +61,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="response-area">
-                                    <h2 class="bold">Comments</h2>
-                                    <ul class="media-list" th:each="comment:${comments}">
-                                        <li class="media">
-                                            <div class="post-comment">
-                                                <a class="pull-left" th:href="@{/user/userDetail/{userId}(userId=${comment.submitId})}">
-                                                    <img class="media-object" width="50" height="50"
-                                                         src="https://xiaosmie-blog-img.oss-cn-beijing.aliyuncs.com/19-1-1/97387214.jpg"
-                                                         alt="">
-                                                </a>
-                                                <div class="media-body">
-                                                    <span><i class="fa fa-user"></i><a href="#"
-                                                                                       th:text="${comment.id}"></a></span>
-                                                    <p th:text="${comment.content}"></p>
-                                                    <ul class="nav navbar-nav post-nav">
-                                                        <li><a href="#" th:inline="text"><i class="fa fa-clock-o"></i>[[${#dates.format(comment.commentTime,'yyyy-MM-dd
-                                                            hh:mm')}]]</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
-                                    <h2 class="bold">Reply</h2>
-                                    <div class="post-comment">
-                                        <form action="/user/addComment" method="post">
-                                            <input style="display: none" type="number" name="submitId" th:value="${session.user.id}">
-                                            <input style="display: none" type="number" name="missionId" th:value="${mission.id}">
-                                            <div class="media-body">
-                                            <textarea name="content" id="comment" required="required"
-                                                      class="form-control" rows="8" placeholder="评论"></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-lg btn-success">回复</button>
-                                        </form>
-
-                                    </div>
-                                </div><!--/Response-area-->
                             </div>
                         </div>
                     </div>

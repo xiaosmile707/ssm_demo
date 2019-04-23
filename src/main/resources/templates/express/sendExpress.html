@@ -201,7 +201,8 @@
                                         <div class="page-wrapper">
                                             <div class="sender-info">
                                                 <div class="sender">
-                                                    <form class="form-horizontal" novalidate="novalidate" th:action="@{/express/add}" method="post">
+                                                    <form class="form-horizontal" novalidate="novalidate"
+                                                          th:action="@{/express/add}" method="post">
                                                         <div class="intellect-warm-reminder">请检查拆分地址信息是否准确，如有遗漏请及时补充
                                                         </div>
                                                         <div class="sftitle">寄方信息<span class="small">标 * 为必填项</span>
@@ -240,13 +241,14 @@
                                                                     type="text"
                                                                     class="form-control ui-autocomplete-input"
                                                                     name="sendName" placeholder="请填写寄件人姓名"
-                                                                    autocomplete="off"></div>
+                                                                    autocomplete="off" required="required"></div>
                                                             <div class="col-xs-5 col-xs-offset-2"><label
                                                                     class="control-label required"
                                                             >收件人姓名</label><input type="text"
                                                                                  class="form-control"
                                                                                  name="receiveName"
-                                                                                 placeholder="请填写收件人姓名">
+                                                                                 placeholder="请填写收件人姓名"
+                                                                                 required="required">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -256,14 +258,16 @@
                                                                 <input type="text"
                                                                        class="cityinput form-control ui-autocomplete-input"
                                                                        id="citySelect" value="" placeholder="请填写寄件城市"
-                                                                       name="sendCity" autocomplete="off">
+                                                                       name="sendCity" autocomplete="off"
+                                                                       required="required">
                                                             </div>
                                                             <div class="col-xs-5 col-xs-offset-2"><label
                                                                     class="control-label required"
                                                             >寄件详细地址</label><input type="text"
                                                                                   class="form-control"
                                                                                   name="sendAddress"
-                                                                                  placeholder="请填写所在街道以及详细地址">
+                                                                                  placeholder="请填写所在街道以及详细地址"
+                                                                                  required="required">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -273,14 +277,15 @@
                                                                 <input type="text" name="receiveCity"
                                                                        class="cityinput form-control ui-autocomplete-input"
                                                                        id="citySelect1" value="" placeholder="请填写收件城市"
-                                                                       autocomplete="off">
+                                                                       autocomplete="off" required="required">
                                                             </div>
                                                             <div class="col-xs-5 col-xs-offset-2"><label
                                                                     class="control-label required"
                                                             >收件详细地址</label><input type="text"
                                                                                   class="form-control"
                                                                                   name="receiveAddress"
-                                                                                  placeholder="请填写所在街道以及详细地址">
+                                                                                  placeholder="请填写所在街道以及详细地址"
+                                                                                  required="required">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -290,25 +295,25 @@
                                                                     type="tel"
                                                                     class="form-control ui-autocomplete-input"
                                                                     name="sendPhone" placeholder="请填写寄手机号码"
-                                                                    autocomplete="off" required></div>
+                                                                    autocomplete="off" required="required"></div>
                                                             <div class="col-xs-5 col-xs-offset-2"><label
-                                                                    class="control-label"
+                                                                    class="control-label required"
                                                             >收件人手机号码</label><input type="tel"
                                                                                    class="form-control"
                                                                                    name="receivePhone"
-                                                                                   placeholder="请填写收件人号码">
+                                                                                   placeholder="请填写收件人号码" required="required">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="col-xs-5 autoAddPicker"><label
-                                                                    class="control-label"
+                                                                    class="control-label required"
                                                             >寄出时间</label><input
                                                                     type="datetime-local"
                                                                     class="form-control ui-autocomplete-input"
                                                                     name="sendTime" placeholder="请填写寄出时间,默认当前时间"
-                                                                    autocomplete="off"></div>
+                                                                    autocomplete="off" required="required"></div>
                                                             <div class="col-xs-5 col-xs-offset-2"><label
-                                                                    class="control-label"
+                                                                    class="control-label required"
                                                             >估计到达时间</label><input type="datetime-local"
                                                                                   class="form-control"
                                                                                   name="receiveTime"
@@ -317,14 +322,14 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="col-xs-5 autoAddPicker"><label
-                                                                    class="control-label"
+                                                                    class="control-label required"
                                                             >重量</label><input
                                                                     type="number"
                                                                     class="form-control ui-autocomplete-input"
                                                                     name="weight" placeholder="单位为KG"
-                                                                    autocomplete="off"></div>
+                                                                    autocomplete="off" required="required"></div>
                                                             <div class="col-xs-5 col-xs-offset-2"><label
-                                                                    class="control-label"
+                                                                    class="control-label required"
                                                             >预计费用</label>
                                                                 <input type="number"
                                                                        class="form-control ui-autocomplete-input"
