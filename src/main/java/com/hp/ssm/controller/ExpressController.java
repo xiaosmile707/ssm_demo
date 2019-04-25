@@ -4,6 +4,7 @@ import com.hp.ssm.model.Express;
 import com.hp.ssm.model.Mission;
 import com.hp.ssm.service.ExpressService;
 import com.hp.ssm.service.MissionService;
+import com.hp.ssm.utils.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,8 @@ public class ExpressController {
         String uuid = UUID.randomUUID().toString();
         express.setUuid(uuid);
         expressService.addExpress(express);
+        SmsUtil.sendSmsText(express.getSendPhone(), "提醒：您的快递 " + express.getName() + " to:" + express.getReceiveName() + " 已寄出,您的快递号为" + uuid);
+        SmsUtil.sendSmsText(express.getReceivePhone(), "提醒：您的快递 " + express.getName() + " from:" + express.getSendName() + " 已寄出,您的快递号为" + uuid);
         session.setAttribute("uuid", uuid);
         return "/express/expressResponse";
     }

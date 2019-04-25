@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Express {
@@ -24,4 +25,5 @@ public class Express {
     private String sendPhone;
     private String receivePhone;
     private double weight;
+    private List<Mission> missions;
 }

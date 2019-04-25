@@ -254,4 +254,9 @@
         from express
         where userId=#{userId,jdbcType=INTEGER} order by sendTime
     </select>
+    <select id="getAllExpress" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from express
+    </select>
 </mapper>

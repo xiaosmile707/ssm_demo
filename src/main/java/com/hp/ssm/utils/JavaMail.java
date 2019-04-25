@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class JavaMail {
-    public static void sendMail(String to, String url,String content) {
+    public static void sendRegisterMail(String to, String url, String content) {
         // 发件人电子邮箱
         String from = "1226165225@qq.com";
         // 获取系统属性

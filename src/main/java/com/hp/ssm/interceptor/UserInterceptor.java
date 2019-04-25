@@ -15,6 +15,10 @@ public class UserInterceptor implements HandlerInterceptor {
         if (checkURL(request.getRequestURI())) {
             return true;
         }
+        if (request.getRequestURI().startsWith("/admin") && request.getSession().getAttribute("user") == null) {
+            response.sendRedirect("/admin/login");
+            return false;
+        }
         if (request.getSession().getAttribute("user") == null && request.getSession().getAttribute("email") == null) {
             response.sendRedirect("/user/login");
             return false;
@@ -33,7 +37,7 @@ public class UserInterceptor implements HandlerInterceptor {
     }
 
     private boolean checkURL(String url) {
-        if (url.startsWith("/img")   || url.startsWith("/error")) {
+        if (url.startsWith("/img")   || url.startsWith("/error") ||url.startsWith("/admin")) {
             return true;
         }
         switch (url) {

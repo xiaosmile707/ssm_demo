@@ -26,8 +26,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -87,8 +89,8 @@ public class UserController {
     }
 
     @GetMapping("/index")
-    public String getIndex(Model model, String expressUUID, HttpSession session, Integer pageNo) {
-        User user = (User) session.getAttribute("user");
+    public String getIndex(Model model, String expressUUID) {
+//        User user = (User) session.getAttribute("user");
 
         List<Mission> missions = new ArrayList<>();
         if (expressUUID != null && !"".equals(expressUUID)) {
@@ -130,7 +132,7 @@ public class UserController {
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 
         Result result = formatReader.decode(binaryBitmap, hints);
-        if(file.exists()){
+        if (file.exists()) {
             file.delete();
         }
         return "redirect:/user/index?expressUUID=" + result.toString();
@@ -226,7 +228,7 @@ public class UserController {
         //发送邮件
         String Url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/user/validate?email=" + secretCode;
         String content = "您注册的账号需要激活";
-        JavaMail.sendMail(user.getEmail(), Url, content);
+        JavaMail.sendRegisterMail(user.getEmail(), Url, content);
         model.addAttribute("errorMsg", "邮件已发往您的邮箱");
         return "register";
     }
@@ -430,6 +432,27 @@ public class UserController {
         Files.write(path, bytes);
         userService.addUserPic(userId, path.toString());
         return "redirect:/user/userDetail/" + userId;
+    }
+
+    //实名制设置
+    @PutMapping("/{email}")
+    @ResponseBody
+    public void updateUserVerify(@PathVariable("email") String email) throws Exception {
+        if (email == null || "".equals(email)) {
+            throw new Exception("email为空");
+        }
+        userService.setUserVerified(email);
+    }
+
+    //重置密码
+    @PutMapping("/password/{email}")
+    @ResponseBody
+    public void resetPwd(@PathVariable("email") String email) throws Exception {
+        if (email == null || "".equals(email)) {
+            throw new Exception("email为空");
+        }
+        String newPwd = JavaMD5.getMd5Code("123456");
+        userService.resetPwd(email, newPwd);
     }
 
     @InitBinder

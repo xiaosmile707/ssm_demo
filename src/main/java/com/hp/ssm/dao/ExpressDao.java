@@ -23,4 +23,7 @@ public interface ExpressDao {
     int updateByPrimaryKey(Express record);
 
     List<Express> findByUserId(@Param("userId") Integer userId);
+
+
+    List<Express> getAllExpress();
 }

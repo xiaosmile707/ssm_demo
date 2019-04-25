@@ -6,6 +6,8 @@ import com.hp.ssm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -86,5 +88,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getUserPic(Integer userId) {
         return userDao.getUserPic(userId);
+    }
+
+    @Override
+    public void setUserVerified(String email) {
+        userDao.updateVerifiedById(2,email);
+    }
+
+    @Override
+    public List<User> getUnRNAuthUserListByUserType(Integer userType) {
+        return userDao.getByRnauthAndType(1,userType);
+    }
+
+    @Override
+    public List<User> getAllUsersByUserType(Integer userType) {
+        return userDao.getUserListByType(userType);
+    }
+
+    @Override
+    public void resetPwd(String email, String newPwd) {
+        userDao.resetPwd(email,newPwd);
+    }
+
+    @Override
+    public void updateUserSelective(User user) {
+        userDao.updateById(user);
     }
 }

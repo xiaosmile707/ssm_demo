@@ -10,4 +10,6 @@ public interface ExpressService {
     List<Express> findAllExpressListByUserId(Integer userId);
 
     Express getExpressDetail(String uuid);
+
+    List<Express> findAllExpressList();
 }

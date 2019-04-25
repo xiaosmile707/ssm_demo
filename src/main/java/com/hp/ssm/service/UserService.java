@@ -2,6 +2,8 @@ package com.hp.ssm.service;
 
 import com.hp.ssm.model.User;
 
+import java.util.List;
+
 public interface UserService {
     void addUser(User user);
 
@@ -32,4 +34,14 @@ public interface UserService {
     void addUserPic(int userId, String userPic);
 
     String getUserPic(Integer userId);
+
+    void setUserVerified(String email);
+
+    List<User> getUnRNAuthUserListByUserType(Integer userType);
+
+    List<User> getAllUsersByUserType(Integer userType);
+
+    void resetPwd(String email, String newPwd);
+
+    void updateUserSelective(User user);
 }
