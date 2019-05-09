@@ -25,8 +25,6 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
@@ -37,7 +35,7 @@
     <div class="register-box-body">
         <p class="login-box-msg">validate your account</p>
 
-        <form  th:action="@{/user/twoStepsValidate}" method="post">
+        <form th:action="@{/user/twoStepsValidate}" method="post">
             <div class="form-group has-feedback">
                 <input type="text" th:value="${session.email}" name="email" style="display: none">
                 <input type="tel" maxlength="6" class="form-control" placeholder="Two-Steps-Code" name="twoStepsCode">
