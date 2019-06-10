@@ -71,8 +71,10 @@
                                                 <form th:action="@{'/admin/updateUser?page=1-2'}" method="post">
                                                     <div class="modal-body">
                                                         <input style="display: none" th:value="${user.id}" name="id">
-                                                        <input style="display: none" th:value="${user.verified}" name="verified">
-                                                        <input style="display: none" th:value="${user.type}" name="type">
+                                                        <input style="display: none" th:value="${user.verified}"
+                                                               name="verified">
+                                                        <input style="display: none" th:value="${user.type}"
+                                                               name="type">
                                                         <ul class="elements">
                                                             <li>姓名&nbsp;&nbsp;&nbsp;<i
                                                                     class="fa fa-angle-right"></i><label>
@@ -89,10 +91,14 @@
                                                             <li>性别&nbsp;&nbsp;&nbsp;<i
                                                                     class="fa fa-angle-right"></i>
                                                                 <select name="sex">
-                                                                    <option value="0" th:if="${user.sex==0}" selected>女</option>
+                                                                    <option value="0" th:if="${user.sex==0}" selected>
+                                                                        女
+                                                                    </option>
                                                                     <option value="1" th:if="${user.sex==0}">男</option>
                                                                     <option value="0" th:if="${user.sex==1}">女</option>
-                                                                    <option value="1" th:if="${user.sex==1}" selected>男</option>
+                                                                    <option value="1" th:if="${user.sex==1}" selected>
+                                                                        男
+                                                                    </option>
                                                                 </select>
                                                             </li>
                                                             <li>地址&nbsp;&nbsp;&nbsp;<i

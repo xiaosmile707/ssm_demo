@@ -49,6 +49,7 @@
                                 <th>发送人联系方式</th>
                                 <th>接收人联系方式</th>
                                 <th>重量</th>
+                                <th>物流详情</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -71,6 +72,71 @@
                                 <td th:inline="text">[[${express.sendPhone}]]</td>
                                 <td th:inline="text">[[${express.receivePhone}]]</td>
                                 <td th:inline="text">[[${express.weight}]]</td>
+                                <td>
+                                    <button class="btn btn-primary" data-toggle="modal"
+                                            th:attr="data-target=${'#missionList'+expressStat.index}">
+                                        查看物流详情
+                                    </button>
+                                    <div class="modal fade" th:id="${'missionList'+expressStat.index}" tabindex="-1"
+                                         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">
+                                                        &times;
+                                                    </button>
+                                                    <h4 class="modal-title" id="myModalLabel1">
+                                                        详情
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-bordered table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>快递描述</th>
+                                                            <th>快递评估</th>
+                                                            <th>快递发送时间</th>
+                                                            <th>快递接受时间</th>
+                                                            <th>快递完成状态</th>
+                                                            <th>处于节点</th>
+                                                            <th>运单号</th>
+                                                            <th>快递顺序号</th>
+                                                            <th>发送快递位置</th>
+                                                            <th>接收快递位置</th>
+                                                            <th>此次快递员Id</th>
+                                                            <th>此次快递员姓名</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr th:each="mission:${express.getMissions()}">
+                                                            <td th:inline="text">[[${mission.content}]]</td>
+                                                            <td th:inline="text">[[${mission.description}]]</td>
+                                                            <td th:inline="text">[[${mission.startTime}]]</td>
+                                                            <td th:inline="text">[[${mission.endTime}]]</td>
+                                                            <td th:inline="text">[[${mission.status}]]</td>
+                                                            <td th:if="${mission.type == 0}">开始节点</td>
+                                                            <td th:if="${mission.type == 1}">中间节点</td>
+                                                            <td th:if="${mission.type == 2}">结束节点</td>
+                                                            <td th:inline="text">[[${mission.expressUUID}]]</td>
+                                                            <td th:inline="text">[[${'当前处于第'+mission.step+'顺序'}]]</td>
+                                                            <td th:inline="text">[[${mission.location}]]</td>
+                                                            <td th:inline="text">[[${mission.destination}]]</td>
+                                                            <td th:inline="text">[[${mission.receiveId}]]</td>
+                                                            <td th:inline="text">[[${mission.receiveUserName}]]</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default"
+                                                            data-dismiss="modal">关闭
+                                                    </button>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal -->
+                                    </div>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
